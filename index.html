@@ -18,6 +18,13 @@
 
       --ink:#111; /* текст */
       --cell:24px; /* фикс высоты строки */
+
+      /* bottom sheet */
+      --sheet-bg:#ffffff;
+      --sheet-border:#d8d8d8;
+      --sheet-shadow: 0 -14px 40px rgba(0,0,0,.22);
+      --overlay: rgba(0,0,0,.45);
+      --radius: 16px;
     }
 
     *{ box-sizing:border-box; }
@@ -205,6 +212,196 @@
     .t_h   td{ border-right:0; }
 
     .t_cdef tr:last-child td{ border-bottom:0; }
+
+    td.cell-neg{
+      background:#FFF2CC;
+      color:#D60000;
+      font-weight:700;
+      font-size:16px;
+      line-height:1;
+      text-align:center;
+      vertical-align:middle;
+      padding:0;
+    }
+
+    td.cell-tau{
+      background:#FFF2CC;
+      color:#111;
+      font-weight:700;
+      text-align:center;
+      vertical-align:middle;
+      padding:0;
+      line-height:1.05;
+      font-size:16px;
+    }
+
+    /* =========================
+       Bottom Sheet (70% height)
+       ========================= */
+    .sheet-overlay{
+      position:fixed;
+      inset:0;
+      background:var(--overlay);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease;
+      z-index:1000;
+    }
+
+    .bottom-sheet{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      height:70vh;
+      max-height:70vh;
+      background:var(--sheet-bg);
+      border-top:1px solid var(--sheet-border);
+      box-shadow:var(--sheet-shadow);
+      border-radius: var(--radius) var(--radius) 0 0;
+      transform: translateY(105%);
+      transition: transform .22s ease;
+      z-index:1001;
+      display:flex;
+      flex-direction:column;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* На компе — делаем панель “аккуратной”: ограничиваем ширину и чуть поднимаем */
+    @media (min-width: 900px){
+      .bottom-sheet{
+        width:min(760px, calc(100% - 32px));
+        left:50%;
+        right:auto;
+        transform: translate(-50%, 105%);
+        bottom:16px;
+        border-radius: var(--radius);
+        border:1px solid var(--sheet-border);
+      }
+      .sheet-overlay{ backdrop-filter: blur(2px); }
+    }
+
+    .sheet-open .sheet-overlay{
+      opacity:1;
+      pointer-events:auto;
+    }
+    .sheet-open .bottom-sheet{
+      transform: translateY(0);
+    }
+    @media (min-width: 900px){
+      .sheet-open .bottom-sheet{
+        transform: translate(-50%, 0);
+      }
+    }
+
+    .sheet-header{
+      padding:10px 12px 8px;
+      border-bottom:1px solid #e7e7e7;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .sheet-handle{
+      width:46px;
+      height:5px;
+      border-radius:999px;
+      background:#cfcfcf;
+      margin:0 auto 6px;
+    }
+    .sheet-title{
+      font-weight:700;
+      font-size:16px;
+      line-height:1.1;
+    }
+    .sheet-close{
+      border:0;
+      background:transparent;
+      font:inherit;
+      font-size:20px;
+      line-height:1;
+      padding:6px 10px;
+      cursor:pointer;
+    }
+    .sheet-body{
+      padding:12px;
+      overflow:auto;
+    }
+
+    /* Таблица внутри sheet */
+    .virt-wrap{
+      border:1px solid #cfcfcf;
+      border-radius:12px;
+      padding:10px;
+      background:#fff;
+    }
+    .virt-headline{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .virt-h{
+      font-weight:700;
+      font-size:18px;
+      line-height:1.1;
+      text-align:center;
+      flex:1 1 auto;
+    }
+    .virt-id{
+      color:#c00000;
+      font-weight:700;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+
+    .virt-table{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+      border:2px solid #6f6f6f;
+    }
+    .virt-table th, .virt-table td{
+      border:2px solid #6f6f6f;
+      padding:6px 4px;
+      text-align:center;
+      vertical-align:middle;
+      font-size:16px;
+      line-height:1.1;
+      height:auto;
+    }
+    .virt-table .colhead{
+      font-weight:700;
+      font-size:18px;
+      background:#ffffff;
+    }
+    .virt-table .rowhead{
+      font-weight:700;
+      width:92px;
+      background:#ffffff;
+    }
+    .virt-blue{
+      background:#9DC3E6; /* близко к “голубому” на скрине */
+      font-weight:700;
+    }
+    .virt-peach{
+      background:#F8CBAD; /* “персиковый” */
+      font-weight:700;
+    }
+
+    /* какая ячейка открывает sheet (подсветка, чтобы было понятно) */
+    td.opens-sheet{
+      cursor:pointer;
+      position:relative;
+    }
+    td.opens-sheet:hover{
+      filter: brightness(0.98);
+    }
+    td.opens-sheet:active{
+      filter: brightness(0.95);
+    }
   </style>
 </head>
 
@@ -255,10 +452,8 @@
         <td rowspan="2" data-type="label">
           <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
         </td>
-        <td rowspan="2" data-type="label">-Hno</td>
-        <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
-        </td>
+        <td class="cell-tau" rowspan="2" data-type="label">-Hno</td>
+        <td class="cell-neg" rowspan="2" data-type="label">750</td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
@@ -303,10 +498,8 @@
 
       <!-- Ряд 7 -->
       <tr class="row">
-        <td rowspan="2" data-type="label">-τₙ⁰</td>
-        <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
-        </td>
+        <td class="cell-tau" rowspan="2" data-type="label">-τₙ⁰</td>
+        <td class="cell-neg" rowspan="2" data-type="label">-15,9</td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
@@ -329,11 +522,12 @@
 
       <!-- Ряд 9 -->
       <tr class="row">
-        <td rowspan="2" data-type="label">Δτ₀<br>(T.2)</td>
+        <!-- ✅ эта ячейка открывает bottom sheet -->
+        <td rowspan="2" class="opens-sheet" data-type="label" data-open-sheet="virt">Δτ₀<br>(T.2)</td>
         <td rowspan="2" data-type="label">
           <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
         </td>
-        <td rowspan="2" class="align-left" colspan="3" data-type="label"> 
+        <td rowspan="2" class="align-left" colspan="3" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">αw₀ = </span>
             <input
@@ -625,6 +819,51 @@
     </table>
   </div>
 
+  <!-- Overlay + Bottom Sheet -->
+  <div class="sheet-overlay" data-sheet-close></div>
+
+  <section class="bottom-sheet" role="dialog" aria-modal="true" aria-label="Віртуальні поправки" aria-hidden="true">
+    <div class="sheet-header">
+      <div style="width:100%">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="sheet-title">Віртуальні поправки</div>
+      </div>
+      <button class="sheet-close" type="button" aria-label="Закрити" data-sheet-close>✕</button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="virt-wrap">
+        <div class="virt-headline">
+          <div class="virt-h">Віртуальні поправки</div>
+          <div class="virt-id">Таблиця 1</div>
+        </div>
+
+        <table class="virt-table" aria-label="Таблиця 1 — Віртуальні поправки">
+          <tr>
+            <th class="rowhead">t°C</th>
+            <th class="colhead">Нижче 0</th>
+            <th class="colhead">0-5</th>
+            <th class="colhead">10-15</th>
+            <th class="colhead">20</th>
+            <th class="colhead">25</th>
+            <th class="colhead">30</th>
+            <th class="colhead">40</th>
+          </tr>
+          <tr>
+            <th class="rowhead">ΔTᵥ,°C</th>
+            <td class="virt-blue">0</td>
+            <td class="virt-peach">+0,5</td>
+            <td class="virt-peach">+1,0</td>
+            <td class="virt-peach">+1,5</td>
+            <td class="virt-peach">+2,0</td>
+            <td class="virt-peach">+3,5</td>
+            <td class="virt-peach">+4,5</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <script>
     // Фокус по клику в td (и для обычных td.has-input, и для префиксных td.has-prefix)
     document.addEventListener('click', (e) => {
@@ -637,6 +876,46 @@
       const input = td.querySelector('input');
       if (input) input.focus({ preventScroll: true });
     }, { passive: true });
+
+    // ===== Bottom sheet logic =====
+    const root = document.documentElement;
+    const sheet = document.querySelector('.bottom-sheet');
+    const overlay = document.querySelector('.sheet-overlay');
+
+    function openSheet(){
+      document.body.classList.add('sheet-open');
+      sheet.setAttribute('aria-hidden', 'false');
+
+      // чтобы фон не скроллился под sheet
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSheet(){
+      document.body.classList.remove('sheet-open');
+      sheet.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Открытие: клик по td с data-open-sheet="virt"
+    document.addEventListener('click', (e) => {
+      const opener = e.target.closest('[data-open-sheet="virt"]');
+      if (!opener) return;
+
+      // если вдруг в этой ячейке окажется input — не открываем
+      if (e.target.matches('input')) return;
+
+      openSheet();
+    });
+
+    // Закрытие: overlay / кнопка ✕
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('[data-sheet-close]')) closeSheet();
+    });
+
+    // ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('sheet-open')) closeSheet();
+    });
   </script>
 </body>
 </html>
