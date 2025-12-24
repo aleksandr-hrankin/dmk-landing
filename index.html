@@ -553,12 +553,24 @@
 
     .t3-table .t3-y,
     .t3-table2 .t3-y{
-      width:120px; /* ✅ было 170 */
+      width:120px;              /* можешь оставить */
       font-weight:700;
       background:#fff;
-      white-space:nowrap;
+
+      /* ✅ разрешаем перенос */
+      white-space:normal;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
     }
-    .t3-table .t3-y2{ width:120px; }
+
+    .t3-table .t3-y2{
+      width:120px;
+      white-space:normal;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
+    }
 
     .t3-table .t3-pink{
       background:#E6A6C6;
@@ -983,7 +995,7 @@
     <div class="sheet-header">
       <div style="width:100%">
         <div class="sheet-handle" aria-hidden="true"></div>
-        <div class="sheet-title">Віртуальні поправки</div>
+        <div class="virt-id">Таблиця 1</div>
       </div>
       <button class="sheet-close" type="button" aria-label="Закрити" data-sheet-close>✕</button>
     </div>
@@ -992,7 +1004,6 @@
       <div class="virt-wrap">
         <div class="virt-headline">
           <div class="virt-h">Віртуальні поправки</div>
-          <div class="virt-id">Таблиця 1</div>
         </div>
 
         <table class="virt-table" aria-label="Таблиця 1 — Віртуальні поправки">
@@ -1028,7 +1039,7 @@
     <div class="sheet-header">
       <div style="width:100%">
         <div class="sheet-handle" aria-hidden="true"></div>
-        <div class="sheet-title">Середні відхилення температури</div>
+        <div class="t2-id">Таблиця 2</div>
       </div>
       <button class="sheet-close" type="button" aria-label="Закрити" data-sheet-close>✕</button>
     </div>
@@ -1037,7 +1048,6 @@
       <div class="t2-wrap">
         <div class="t2-headline">
           <div class="t2-h">Середні відхилення температури</div>
-          <div class="t2-id">Таблиця 2</div>
         </div>
 
         <div class="t2-scroll">
@@ -1240,7 +1250,7 @@
     <div class="sheet-header">
       <div style="width:100%">
         <div class="sheet-handle" aria-hidden="true"></div>
-        <div class="sheet-title">Швидкість середнього вітру Wᵧ та Δαwᵧ</div>
+        <div class="t3-id">Таблиця 3</div>
       </div>
       <button class="sheet-close" type="button" aria-label="Закрити" data-sheet-close>✕</button>
     </div>
@@ -1249,7 +1259,6 @@
       <div class="t3-wrap">
         <div class="t3-headline">
           <div class="t3-h">Швидкість середнього вітру Wᵧ (м/с) та збільшення напрямку Δαwᵧ (под. кут.)</div>
-          <div class="t3-id">Таблиця 3</div>
         </div>
 
         <p class="t3-note">В залежності від швидкості наземного вітру v₀ та дальності зносу вітрових куль Δr</p>
