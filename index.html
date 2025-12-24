@@ -216,7 +216,8 @@
 
     /* overlay visible if any sheet is open */
     body.sheet-open-virt .sheet-overlay,
-    body.sheet-open-t2 .sheet-overlay{
+    body.sheet-open-t2 .sheet-overlay,
+    body.sheet-open-t3 .sheet-overlay{
       opacity:1;
       pointer-events:auto;
     }
@@ -224,10 +225,12 @@
     /* open specific sheet */
     body.sheet-open-virt .sheet-virt{ transform: translateY(0); }
     body.sheet-open-t2  .sheet-t2  { transform: translateY(0); }
+    body.sheet-open-t3  .sheet-t3  { transform: translateY(0); }
 
     @media (min-width: 900px){
       body.sheet-open-virt .sheet-virt{ transform: translate(-50%, 0); }
       body.sheet-open-t2  .sheet-t2  { transform: translate(-50%, 0); }
+      body.sheet-open-t3  .sheet-t3  { transform: translate(-50%, 0); }
     }
 
     .sheet-header{
@@ -365,7 +368,7 @@
       border-collapse:collapse;
       table-layout:fixed;
       border:2px solid var(--grid);
-      min-width: 980px; /* чтобы 14 колонок не сжимались в кашу */
+      min-width: 980px;
       width:100%;
     }
     .t2-table th, .t2-table td{
@@ -395,7 +398,7 @@
       background:#fff;
     }
     .t2-table .t2-tophead{
-      background:#B69CF3; /* фиолетовый как на скрине */
+      background:#B69CF3;
       font-weight:700;
       font-size:18px;
     }
@@ -425,10 +428,154 @@
       font-weight:700;
     }
 
-    /* opener cells */
+    /* ================
+       Sheet: Table 3
+       ================ */
+    .t3-wrap{
+      border:1px solid #cfcfcf;
+      border-radius:12px;
+      padding:10px;
+      background:#fff;
+    }
+    .t3-headline{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .t3-h{
+      font-weight:700;
+      font-size:18px;
+      line-height:1.1;
+      text-align:center;
+      flex:1 1 auto;
+    }
+    .t3-id{
+      color:#c00000;
+      font-weight:700;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+    .t3-note{
+      font-size:14px;
+      line-height:1.25;
+      color:#222;
+      margin:0 0 10px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    .t3-scroll{
+      overflow:auto;
+      border-radius:10px;
+      border:0;
+    }
+
+    .t3-table{
+      border-collapse:collapse;
+      table-layout:fixed;
+      border:2px solid var(--grid);
+      width:100%;
+      min-width: 1120px; /* чтобы 13+ кол не сжимались */
+      background:#fff;
+      margin-bottom:12px;
+    }
+    .t3-table th, .t3-table td{
+      border:2px solid var(--grid);
+      text-align:center;
+      vertical-align:middle;
+      padding:6px 4px;
+      height:auto;
+      line-height:1.05;
+      font-size:16px;
+      background:#fff;
+    }
+    .t3-table .t3-title{
+      font-weight:700;
+      font-size:18px;
+      padding:10px 8px;
+      background:#fff;
+    }
+    .t3-table .t3-sub{
+      font-weight:700;
+      font-size:18px;
+      background:#fff;
+    }
+    .t3-table .t3-y{
+      width:170px;
+      font-weight:700;
+      background:#fff;
+    }
+    .t3-table .t3-y2{
+      width:170px;
+      font-weight:700;
+      background:#fff;
+    }
+    .t3-table .t3-pink{
+      background:#E6A6C6;
+      font-weight:700;
+      font-size:18px;
+    }
+    .t3-table .t3-right{
+      width:210px;
+      font-weight:700;
+      background:#FFF2CC;
+    }
+    .t3-table .t3-rightcell{
+      font-weight:700;
+      background:#FFF2CC;
+    }
+
+    .t3-table2{
+      border-collapse:collapse;
+      table-layout:fixed;
+      border:2px solid var(--grid);
+      width:100%;
+      min-width: 1060px; /* 12 колонок + 2 */
+      background:#fff;
+    }
+    .t3-table2 th, .t3-table2 td{
+      border:2px solid var(--grid);
+      text-align:center;
+      vertical-align:middle;
+      padding:6px 4px;
+      height:auto;
+      line-height:1.05;
+      font-size:16px;
+      background:#fff;
+    }
+    .t3-table2 .t3-title{
+      font-weight:700;
+      font-size:18px;
+      padding:10px 8px;
+      background:#fff;
+    }
+    .t3-table2 .t3-sub{
+      font-weight:700;
+      font-size:18px;
+      background:#fff;
+    }
+    .t3-table2 .t3-y{
+      width:170px;
+      font-weight:700;
+      background:#fff;
+    }
+    .t3-table2 .t3-right{
+      width:210px;
+      font-weight:700;
+      background:#fff;
+    }
+
+    /* opener cells / links */
     [data-open-sheet]{
       user-select:none;
       cursor:pointer;
+    }
+    .sheet-link{
+      cursor:pointer;
+      user-select:none;
+      font-weight:700;
     }
   </style>
 </head>
@@ -550,7 +697,6 @@
 
       <!-- Ряд 9 -->
       <tr class="row">
-        <!-- ✅ открывает Таблицу 2 -->
         <td rowspan="2" data-type="label" data-open-sheet="t2">Δτ₀<br>(T.2)</td>
         <td rowspan="2" data-type="label">
           <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
@@ -585,12 +731,15 @@
         <td rowspan="2" data-type="label">Δτᵧ</td>
         <td rowspan="2" data-type="label">Δαwᵧ</td>
         <td rowspan="2" colspan="2" data-type="label">αw₀ − αwᵧ</td>
+
+        <!-- ✅ кликабельный маркер T.3 (открывает Таблицу 3) -->
         <td rowspan="2" class="align-left" data-type="label">
           <div class="prefix-wrap">
-            <span class="prefix">Wᵧ = <br>(T.3)</span>
+            <span class="prefix sheet-link" data-open-sheet="t3">Wᵧ = <br>(T.3)</span>
             <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
+
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
       </tr>
@@ -816,20 +965,10 @@
               <th class="t2-sub" colspan="14">Δτ₀, град</th>
             </tr>
             <tr>
-              <th class="t2-tophead">1</th>
-              <th class="t2-tophead">2</th>
-              <th class="t2-tophead">3</th>
-              <th class="t2-tophead">4</th>
-              <th class="t2-tophead">5</th>
-              <th class="t2-tophead">6</th>
-              <th class="t2-tophead">7</th>
-              <th class="t2-tophead">8</th>
-              <th class="t2-tophead">9</th>
-              <th class="t2-tophead">10</th>
-              <th class="t2-tophead">20</th>
-              <th class="t2-tophead">30</th>
-              <th class="t2-tophead">40</th>
-              <th class="t2-tophead">50</th>
+              <th class="t2-tophead">1</th><th class="t2-tophead">2</th><th class="t2-tophead">3</th><th class="t2-tophead">4</th>
+              <th class="t2-tophead">5</th><th class="t2-tophead">6</th><th class="t2-tophead">7</th><th class="t2-tophead">8</th>
+              <th class="t2-tophead">9</th><th class="t2-tophead">10</th><th class="t2-tophead">20</th><th class="t2-tophead">30</th>
+              <th class="t2-tophead">40</th><th class="t2-tophead">50</th>
             </tr>
 
             <!-- 02 -->
@@ -1009,6 +1148,151 @@
     </div>
   </section>
 
+  <!-- ========================
+       Bottom Sheet — Table 3
+       ======================== -->
+  <section class="bottom-sheet sheet-t3" role="dialog" aria-modal="true" aria-label="Швидкість середнього вітру Wy" aria-hidden="true">
+    <div class="sheet-header">
+      <div style="width:100%">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="sheet-title">Швидкість середнього вітру Wᵧ та Δαwᵧ</div>
+      </div>
+      <button class="sheet-close" type="button" aria-label="Закрити" data-sheet-close>✕</button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="t3-wrap">
+        <div class="t3-headline">
+          <div class="t3-h">Швидкість середнього вітру Wᵧ (м/с) та збільшення напрямку Δαwᵧ (под. кут.)</div>
+          <div class="t3-id">Таблиця 3</div>
+        </div>
+
+        <p class="t3-note">В залежності від швидкості наземного вітру v₀ та дальності зносу вітрових куль Δr</p>
+
+        <div class="t3-scroll" aria-label="Прокрутка таблиць Таблиці 3">
+          <!-- ====== Верхня (від v0) ====== -->
+          <table class="t3-table" aria-label="Таблиця 3 — Wy та Δαwy в залежності від v0">
+            <tr>
+              <th class="t3-title" colspan="15">В залежності від швидкості наземного вітру v₀</th>
+            </tr>
+            <tr>
+              <th class="t3-y" rowspan="2">Стандартні висоти Y, м</th>
+              <th class="t3-sub" colspan="13">v₀, м/с</th>
+              <th class="t3-right" rowspan="2">Дирекційний кут вітру αw₀<br>збільшити на Δαwᵧ</th>
+            </tr>
+            <tr>
+              <th class="t3-pink">3</th><th class="t3-pink">4</th><th class="t3-pink">5</th><th class="t3-pink">6</th><th class="t3-pink">7</th>
+              <th class="t3-pink">8</th><th class="t3-pink">9</th><th class="t3-pink">10</th><th class="t3-pink">11</th><th class="t3-pink">12</th>
+              <th class="t3-pink">13</th><th class="t3-pink">14</th><th class="t3-pink">15</th>
+            </tr>
+
+            <tr>
+              <th class="t3-y2">200 — 02</th>
+              <td>04</td><td>06</td><td>08</td><td>09</td><td>10</td><td>12</td><td>14</td><td>15</td><td>16</td><td>18</td><td>20</td><td>21</td><td>22</td>
+              <td class="t3-rightcell">1-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">400 — 04</th>
+              <td>05</td><td>07</td><td>10</td><td>11</td><td>12</td><td>14</td><td>17</td><td>18</td><td>20</td><td>22</td><td>23</td><td>25</td><td>27</td>
+              <td class="t3-rightcell">2-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">800 — 08</th>
+              <td>05</td><td>08</td><td>10</td><td>11</td><td>13</td><td>15</td><td>18</td><td>19</td><td>21</td><td>23</td><td>25</td><td>27</td><td>28</td>
+              <td class="t3-rightcell">3-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">1200 — 12</th>
+              <td>05</td><td>08</td><td>11</td><td>12</td><td>13</td><td>16</td><td>19</td><td>20</td><td>22</td><td>24</td><td>26</td><td>28</td><td>30</td>
+              <td class="t3-rightcell">3-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">1600 — 16</th>
+              <td>06</td><td>08</td><td>11</td><td>13</td><td>14</td><td>17</td><td>20</td><td>21</td><td>23</td><td>25</td><td>27</td><td>29</td><td>32</td>
+              <td class="t3-rightcell">4-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">2000 — 20</th>
+              <td>06</td><td>09</td><td>11</td><td>13</td><td>14</td><td>17</td><td>20</td><td>21</td><td>24</td><td>26</td><td>28</td><td>30</td><td>32</td>
+              <td class="t3-rightcell">4-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">2400 — 24</th>
+              <td>06</td><td>09</td><td>12</td><td>14</td><td>15</td><td>18</td><td>21</td><td>22</td><td>25</td><td>27</td><td>29</td><td>32</td><td>34</td>
+              <td class="t3-rightcell">4-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">3000 — 30</th>
+              <td>06</td><td>09</td><td>12</td><td>14</td><td>15</td><td>18</td><td>21</td><td>23</td><td>25</td><td>28</td><td>30</td><td>32</td><td>36</td>
+              <td class="t3-rightcell">5-00</td>
+            </tr>
+            <tr>
+              <th class="t3-y2">4000 — 40</th>
+              <td>06</td><td>10</td><td>12</td><td>14</td><td>16</td><td>19</td><td>22</td><td>24</td><td>26</td><td>29</td><td>32</td><td>34</td><td>36</td>
+              <td class="t3-rightcell">5-00</td>
+            </tr>
+          </table>
+
+          <!-- ====== Нижня (від Δr) ====== -->
+          <table class="t3-table2" aria-label="Таблиця 3 — Wy та Δαwy в залежності від дальності зносу вітрових куль Δr">
+            <tr>
+              <th class="t3-title" colspan="14">В залежності від дальності зносу вітрових куль Δr</th>
+            </tr>
+            <tr>
+              <th class="t3-y" rowspan="2">Стандартні висоти Y, м</th>
+              <th class="t3-sub" colspan="12">Дальність зносу вітрових куль Δr</th>
+              <th class="t3-right" rowspan="2">Дирекційний кут вітру αw₀<br>збільшити на Δαwᵧ</th>
+            </tr>
+            <tr>
+              <th>40</th><th>50</th><th>60</th><th>70</th><th>80</th><th>90</th><th>100</th><th>110</th><th>120</th><th>130</th><th>140</th><th>150</th>
+            </tr>
+
+            <tr>
+              <th>200 — 02</th>
+              <td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>12</td>
+              <td>0-00</td>
+            </tr>
+            <tr>
+              <th>400 — 04</th>
+              <td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
+              <td>1-00</td>
+            </tr>
+            <tr>
+              <th>800 — 08</th>
+              <td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>13</td><td>14</td><td>15</td><td>16</td>
+              <td>2-00</td>
+            </tr>
+            <tr>
+              <th>1200 — 12</th>
+              <td>4</td><td>5</td><td>7</td><td>8</td><td>8</td><td>9</td><td>11</td><td>12</td><td>13</td><td>15</td><td>15</td><td>16</td>
+              <td>2-00</td>
+            </tr>
+            <tr>
+              <th>1600 — 16</th>
+              <td>4</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>13</td><td>14</td><td>15</td><td>17</td><td>17</td>
+              <td>3-00</td>
+            </tr>
+            <tr>
+              <th>2000 — 20</th>
+              <td>4</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>13</td><td>14</td><td>16</td><td>17</td><td>18</td>
+              <td>3-00</td>
+            </tr>
+            <tr>
+              <th>2400 — 24</th>
+              <td>4</td><td>6</td><td>8</td><td>9</td><td>9</td><td>10</td><td>12</td><td>14</td><td>15</td><td>16</td><td>18</td><td>19</td>
+              <td>3-00</td>
+            </tr>
+            <tr>
+              <th>3000 — 30</th>
+              <td>5</td><td>6</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>14</td><td>15</td><td>17</td><td>18</td><td>19</td>
+              <td>4-00</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script>
     // (оставил только удобный фокус в input при клике по td)
     document.addEventListener('click', (e) => {
@@ -1021,12 +1305,14 @@
 
     const sheetVirt = document.querySelector('.sheet-virt');
     const sheetT2   = document.querySelector('.sheet-t2');
+    const sheetT3   = document.querySelector('.sheet-t3');
 
     function openSheet(which){
       // закрыть всё
-      document.body.classList.remove('sheet-open-virt', 'sheet-open-t2');
+      document.body.classList.remove('sheet-open-virt', 'sheet-open-t2', 'sheet-open-t3');
       sheetVirt.setAttribute('aria-hidden', 'true');
       sheetT2.setAttribute('aria-hidden', 'true');
+      sheetT3.setAttribute('aria-hidden', 'true');
 
       // открыть нужное
       if (which === 'virt'){
@@ -1035,19 +1321,23 @@
       } else if (which === 't2'){
         document.body.classList.add('sheet-open-t2');
         sheetT2.setAttribute('aria-hidden', 'false');
+      } else if (which === 't3'){
+        document.body.classList.add('sheet-open-t3');
+        sheetT3.setAttribute('aria-hidden', 'false');
       }
 
       document.body.style.overflow = 'hidden';
     }
 
     function closeSheets(){
-      document.body.classList.remove('sheet-open-virt', 'sheet-open-t2');
+      document.body.classList.remove('sheet-open-virt', 'sheet-open-t2', 'sheet-open-t3');
       sheetVirt.setAttribute('aria-hidden', 'true');
       sheetT2.setAttribute('aria-hidden', 'true');
+      sheetT3.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
 
-    // open by click on cell markers (T.1 / T.2)
+    // open by click on markers (T.1 / T.2 / T.3)
     document.addEventListener('click', (e) => {
       const opener = e.target.closest('[data-open-sheet]');
       if (!opener) return;
@@ -1062,7 +1352,11 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
-      if (document.body.classList.contains('sheet-open-virt') || document.body.classList.contains('sheet-open-t2')) {
+      if (
+        document.body.classList.contains('sheet-open-virt') ||
+        document.body.classList.contains('sheet-open-t2') ||
+        document.body.classList.contains('sheet-open-t3')
+      ) {
         closeSheets();
       }
     });
