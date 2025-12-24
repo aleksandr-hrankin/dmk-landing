@@ -7,34 +7,45 @@
 
   <style>
     :root{
-      --ink:#111;
       --paper:#fff;
       --bg:#f2f2f2;
+
+      /* ✅ единый цвет линий (бордеров) по всей таблице */
+      --grid:#6f6f6f;
+
+      /* ✅ заливка "неактивной" ячейки = цвету бордера */
+      --inactive: var(--grid);
+
+      --ink:#111; /* текст */
     }
+
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
       background:var(--bg);
       font-family:"Times New Roman", Times, serif;
       color:var(--ink);
     }
+
     .page{
-      width: 210mm;
-      min-height: 297mm;
-      margin: 16px auto;
-      padding: 10mm 10mm;
+      width:210mm;
+      min-height:297mm;
+      margin:16px auto;
+      padding:10mm 10mm;
       background:var(--paper);
-      box-shadow: 0 10px 35px rgba(0,0,0,.12);
+      box-shadow:0 10px 35px rgba(0,0,0,.12);
     }
 
     table{
       width:100%;
       border-collapse:collapse;
       table-layout:fixed;
-      border:2px solid var(--ink);
+      border:2px solid var(--grid);
     }
+
     th, td{
-      border:2px solid var(--ink);
+      border:2px solid var(--grid);
       padding:0;
       vertical-align:middle;
       text-align:center;
@@ -49,19 +60,26 @@
       line-height:1.2;
       text-align:center;
     }
-    tr.row{ height:24px; }
-    tr.row > td{ height:24px; } /* можно оставить, но ключевое — height на tr */
 
+    tr.row{ height:24px; }
+    tr.row > td{ height:24px; }
+
+    /* ✅ самая первая ячейка (неактивная) */
+    td.is-inactive{
+      background:var(--inactive); /* = цвет бордера */
+      color:#fff;                 /* чтобы если текст появится — читался */
+    }
 
     /* ===== ЗЕЛЁНАЯ объединённая зона (C..H) × 12 строк (1..12) ===== */
     td.zone{
       padding:0;
       vertical-align:top;
     }
+
     .zone-grid{
       display:grid;
-      grid-template-columns: repeat(6, 1fr);      /* C D E F G H */
-      grid-template-rows: repeat(12, 24px);      /* 1..12 */
+      grid-template-columns: repeat(6, 1fr);  /* C D E F G H */
+      grid-template-rows: repeat(12, 24px);   /* 1..12 */
       width:100%;
       height: calc(24px * 12);
     }
@@ -74,8 +92,9 @@
       table-layout:fixed;
       border:0; /* чтобы не было "жирных" двойных линий */
     }
+
     .mini td{
-      border:2px solid var(--ink);
+      border:2px solid var(--grid);
       padding:0;
       text-align:center;
       vertical-align:middle;
@@ -88,9 +107,7 @@
     .t_fgh  { grid-column: 4 / span 3; grid-row: 1 / span 2; } /* F1..H2 */
     .t_gh   { grid-column: 5 / span 2; grid-row: 4 / span 2; } /* G4..H5 */
     .t_h    { grid-column: 6 / span 1; grid-row: 7 / span 2; } /* H7..H8 */
-
-    /* ✅ было span 5 (C8..F12), стало span 4 (строку C9..F9 удалили) */
-    .t_cdef { grid-column: 1 / span 4; grid-row: 9 / span 4; }
+    .t_cdef { grid-column: 1 / span 4; grid-row: 9 / span 4; } /* C9..F12 */
 
     /* ===== убираем двойные границы по краям зелёной зоны ===== */
 
@@ -107,7 +124,7 @@
     .t_gh  td:last-child{ border-right:0; }
     .t_h   td{ border-right:0; } /* 1 колонка */
 
-    /* низ зоны (ряд 12) — касается большого блока (последняя строка в нём) */
+    /* низ зоны (ряд 12) */
     .t_cdef tr:last-child td{ border-bottom:0; }
   </style>
 </head>
@@ -124,109 +141,200 @@
 
       <!-- Ряд 1 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td rowspan="2" data-type="label">t₀</td>
+        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">H₀</td>
+        <td rowspan="2" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
       </tr>
 
+      <!-- Ряд 2 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td data-type="label">день</td>
+        <td data-type="label">час</td>
+        <td data-type="label">хв</td>
       </tr>
 
+      <!-- Ряд 3 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td rowspan="2" data-type="label">+ΔTᵥ\n(T.1)</td>
+        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">-Hno</td>
+        <td rowspan="2" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
       </tr>
 
+      <!-- Ряд 4 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
       </tr>
 
+      <!-- Ряд 5 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td rowspan="2" data-type="label">τ₀</td>
+        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">ΔH₀</td>
+        <td rowspan="2" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td data-type="label">ΔH₀</td>
+        <td data-type="label">Δτ₀</td>
       </tr>
 
+      <!-- Ряд 6 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
       </tr>
 
+      <!-- Ряд 7 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td rowspan="2" data-type="label">-τₙ⁰</td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td data-type="label"></td>
       </tr>
 
+      <!-- Ряд 8 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td data-type="label">h, мп</td>
       </tr>
 
+      <!-- Ряд 9 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td rowspan="2" data-type="label">Δτ₀\n(T.2)</td>
+        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" colspan="3" data-type="label">αw₀ = </td>
+        <td rowspan="2" data-type="label">W₀ = </td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
       </tr>
 
+      <!-- Ряд 10 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
       </tr>
 
+      <!-- Ряд 11 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td rowspan="2" data-type="label">Yб</td>
+        <td rowspan="2" data-type="label">Δτᵧ</td>
+        <td rowspan="2" data-type="label">Δαwᵧ</td>
+        <td rowspan="2" colspan="2" data-type="label">αw₀ − αwᵧ</td>
+        <td rowspan="2" data-type="label">Wᵧ = \n(T.3)</td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
       </tr>
 
+      <!-- Ряд 12 -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
+        <td class="is-inactive" data-type="label"></td>
       </tr>
 
       <!-- Ряд 13 и ниже -->
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">200</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">02-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">400</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">04-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">800</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">08-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">1200</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">12-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">1600</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">16-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">2000</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">20-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">2400</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">24-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">3000</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">30-</td>
       </tr>
 
       <tr class="row">
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
-        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label">4000</td>
+        <td data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label"></td>
+        <td data-type="label"></td>
+        <td colspan="2" data-type="label">40-</td>
       </tr>
     </table>
   </div>
