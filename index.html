@@ -9,15 +9,10 @@
     :root{
       --paper:#fff;
       --bg:#f2f2f2;
-
-      /* ✅ единый цвет линий (бордеров) по всей таблице */
       --grid:#6f6f6f;
-
-      /* ✅ заливка "неактивной" ячейки = цвету бордера */
       --inactive: var(--grid);
-
-      --ink:#111; /* текст */
-      --cell:24px; /* фикс высоты строки */
+      --ink:#111;
+      --cell:24px;
 
       /* bottom sheet */
       --sheet-bg:#ffffff;
@@ -79,22 +74,19 @@
     tr.row{ height:var(--cell); }
     tr.row > td{ height:var(--cell); }
 
-    /* ✅ самая первая ячейка (неактивная) */
     td.is-inactive{
-      background:var(--inactive); /* = цвет бордера */
-      color:#fff;                 /* чтобы если текст появится — читался */
+      background:var(--inactive);
+      color:#fff;
     }
 
-    /* ✅ ВЫРАВНИВАНИЕ ПО ЛЕВОМУ КРАЮ (точечно для нужных ячеек) */
     td.align-left{
       text-align:left;
-      padding-left:6px; /* чуть воздуха от бордера */
+      padding-left:6px;
     }
 
-    /* ===== ЯЧЕЙКА С ВВОДОМ (чтобы выглядело как обычный td) ===== */
-    td.has-input{
+    td.has-input,
+    td.has-prefix{
       padding:0;
-      cursor:text;
     }
 
     .cell-input{
@@ -106,7 +98,7 @@
       background:transparent;
       color:var(--ink);
       font:inherit;
-      font-size:16px; /* важно: >=16px чтобы iOS не зумил */
+      font-size:16px;
       line-height:1;
       text-align:center;
       padding:0;
@@ -122,17 +114,12 @@
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-    /* ===== ✅ "02-" + ввод в той же ячейке ===== */
-    td.has-prefix{
-      cursor:text;
-      padding:0 6px;     /* чуть воздуха внутри */
-      text-align:left;
-    }
     .prefix-wrap{
       height:100%;
       display:flex;
       align-items:center;
       gap:8px;
+      padding:0 6px;
     }
     .prefix{
       white-space:nowrap;
@@ -158,60 +145,6 @@
       caret-color: var(--ink);
       touch-action: manipulation;
     }
-
-    /* ===== ЗЕЛЁНАЯ объединённая зона (C..H) × 12 строк (1..12) ===== */
-    td.zone{
-      padding:0;
-      vertical-align:top;
-    }
-
-    .zone-grid{
-      display:grid;
-      grid-template-columns: repeat(6, 1fr);  /* C D E F G H */
-      grid-template-rows: repeat(12, var(--cell));   /* 1..12 */
-      width:100%;
-      height: calc(var(--cell) * 12);
-    }
-
-    /* ===== вложенные таблицы ===== */
-    .mini{
-      width:100%;
-      height:100%;
-      border-collapse:collapse;
-      table-layout:fixed;
-      border:0;
-    }
-
-    .mini td{
-      border:2px solid var(--grid);
-      padding:0;
-      text-align:center;
-      vertical-align:middle;
-      font-size:16px;
-      height:var(--cell);
-      line-height:1;
-      overflow:hidden;
-    }
-
-    /* Позиции блоков как на скрине */
-    .t_cd   { grid-column: 1 / span 2; grid-row: 1 / span 6; }
-    .t_fgh  { grid-column: 4 / span 3; grid-row: 1 / span 2; }
-    .t_gh   { grid-column: 5 / span 2; grid-row: 4 / span 2; }
-    .t_h    { grid-column: 6 / span 1; grid-row: 7 / span 2; }
-    .t_cdef { grid-column: 1 / span 4; grid-row: 9 / span 4; }
-
-    /* ===== убираем двойные границы по краям зелёной зоны ===== */
-    .t_cd  tr:first-child td{ border-top:0; }
-    .t_fgh tr:first-child td{ border-top:0; }
-
-    .t_cd   td:first-child{ border-left:0; }
-    .t_cdef td:first-child{ border-left:0; }
-
-    .t_fgh td:last-child{ border-right:0; }
-    .t_gh  td:last-child{ border-right:0; }
-    .t_h   td{ border-right:0; }
-
-    .t_cdef tr:last-child td{ border-bottom:0; }
 
     td.cell-neg{
       background:#FFF2CC;
@@ -268,10 +201,9 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* На компе — делаем панель “аккуратной”: ограничиваем ширину и чуть поднимаем */
     @media (min-width: 900px){
       .bottom-sheet{
-        width:min(760px, calc(100% - 32px));
+        width:min(860px, calc(100% - 32px));
         left:50%;
         right:auto;
         transform: translate(-50%, 105%);
@@ -282,17 +214,20 @@
       .sheet-overlay{ backdrop-filter: blur(2px); }
     }
 
-    .sheet-open .sheet-overlay{
+    /* overlay visible if any sheet is open */
+    body.sheet-open-virt .sheet-overlay,
+    body.sheet-open-t2 .sheet-overlay{
       opacity:1;
       pointer-events:auto;
     }
-    .sheet-open .bottom-sheet{
-      transform: translateY(0);
-    }
+
+    /* open specific sheet */
+    body.sheet-open-virt .sheet-virt{ transform: translateY(0); }
+    body.sheet-open-t2  .sheet-t2  { transform: translateY(0); }
+
     @media (min-width: 900px){
-      .sheet-open .bottom-sheet{
-        transform: translate(-50%, 0);
-      }
+      body.sheet-open-virt .sheet-virt{ transform: translate(-50%, 0); }
+      body.sheet-open-t2  .sheet-t2  { transform: translate(-50%, 0); }
     }
 
     .sheet-header{
@@ -329,7 +264,9 @@
       overflow:auto;
     }
 
-    /* Таблица внутри sheet */
+    /* ================
+       Sheet: Table 1
+       ================ */
     .virt-wrap{
       border:1px solid #cfcfcf;
       border-radius:12px;
@@ -361,10 +298,10 @@
       width:100%;
       border-collapse:collapse;
       table-layout:fixed;
-      border:2px solid #6f6f6f;
+      border:2px solid var(--grid);
     }
     .virt-table th, .virt-table td{
-      border:2px solid #6f6f6f;
+      border:2px solid var(--grid);
       padding:6px 4px;
       text-align:center;
       vertical-align:middle;
@@ -383,24 +320,115 @@
       background:#ffffff;
     }
     .virt-blue{
-      background:#9DC3E6; /* близко к “голубому” на скрине */
+      background:#9DC3E6;
       font-weight:700;
     }
     .virt-peach{
-      background:#F8CBAD; /* “персиковый” */
+      background:#F8CBAD;
       font-weight:700;
     }
 
-    /* какая ячейка открывает sheet (подсветка, чтобы было понятно) */
-    td.opens-sheet{
+    /* ================
+       Sheet: Table 2
+       ================ */
+    .t2-wrap{
+      border:1px solid #cfcfcf;
+      border-radius:12px;
+      padding:10px;
+      background:#fff;
+    }
+    .t2-headline{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .t2-h{
+      font-weight:700;
+      font-size:18px;
+      line-height:1.1;
+      text-align:center;
+      flex:1 1 auto;
+    }
+    .t2-id{
+      color:#c00000;
+      font-weight:700;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+    .t2-scroll{
+      overflow:auto;
+      border-radius:10px;
+    }
+    .t2-table{
+      border-collapse:collapse;
+      table-layout:fixed;
+      border:2px solid var(--grid);
+      min-width: 980px; /* чтобы 14 колонок не сжимались в кашу */
+      width:100%;
+    }
+    .t2-table th, .t2-table td{
+      border:2px solid var(--grid);
+      text-align:center;
+      vertical-align:middle;
+      padding:6px 4px;
+      height:auto;
+      line-height:1.05;
+      font-size:16px;
+      background:#fff;
+    }
+    .t2-table .t2-title{
+      font-weight:700;
+      font-size:18px;
+      padding:10px 8px;
+      background:#fff;
+    }
+    .t2-table .t2-sub{
+      font-weight:700;
+      font-size:18px;
+      background:#fff;
+    }
+    .t2-table .t2-y{
+      width:86px;
+      font-weight:700;
+      background:#fff;
+    }
+    .t2-table .t2-tophead{
+      background:#B69CF3; /* фиолетовый как на скрине */
+      font-weight:700;
+      font-size:18px;
+    }
+    .t2cell{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      padding:2px 0;
+      min-height:48px;
+    }
+    .t2cell .neg{
+      color:#111;
+      font-weight:700;
+      font-size:18px;
+      line-height:1;
+    }
+    .t2cell .pos{
+      color:#D60000;
+      font-weight:700;
+      font-size:18px;
+      line-height:1;
+    }
+    .t2cell .pos.na{
+      color:#111;
+      font-weight:700;
+    }
+
+    /* opener cells */
+    [data-open-sheet]{
+      user-select:none;
       cursor:pointer;
-      position:relative;
-    }
-    td.opens-sheet:hover{
-      filter: brightness(0.98);
-    }
-    td.opens-sheet:active{
-      filter: brightness(0.95);
     }
   </style>
 </head>
@@ -410,7 +438,7 @@
     <table aria-label="Бланк складання наближеного бюлетеня метеосередній">
       <tr>
         <th class="title" colspan="8" data-type="label">
-          <div>БЛАНК СКЛАДАННЯ НАБЛИЖЕНОГО БЮЛЕТЕНЯ МЕТЕОСЕРЕДНІЙ</div>
+          <div>БЛАНК СКЛЛАДАННЯ НАБЛИЖЕНОГО БЮЛЕТЕНЯ МЕТЕОСЕРЕДНІЙ</div>
           <div>ЗА ДАНИМИ ДМК</div>
         </th>
       </tr>
@@ -419,22 +447,22 @@
       <tr class="row">
         <td rowspan="2" data-type="label">t₀</td>
         <td rowspan="2" class="has-input" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
 
         <td rowspan="2" data-type="label">H₀</td>
         <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td class="is-inactive" data-type="label"></td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
       </tr>
 
@@ -448,9 +476,9 @@
 
       <!-- Ряд 3 -->
       <tr class="row">
-        <td rowspan="2" data-type="label">+ΔTᵥ<br>(T.1)</td>
+        <td rowspan="2" data-type="label" data-open-sheet="virt">+ΔTᵥ<br>(T.1)</td>
         <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td class="cell-tau" rowspan="2" data-type="label">-Hno</td>
         <td class="cell-neg" rowspan="2" data-type="label">750</td>
@@ -465,10 +493,10 @@
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
       </tr>
 
@@ -476,11 +504,11 @@
       <tr class="row">
         <td rowspan="2" data-type="label">τ₀</td>
         <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td rowspan="2" data-type="label">ΔH₀</td>
         <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
@@ -506,7 +534,7 @@
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
       </tr>
 
@@ -522,40 +550,22 @@
 
       <!-- Ряд 9 -->
       <tr class="row">
-        <!-- ✅ эта ячейка открывает bottom sheet -->
-        <td rowspan="2" class="opens-sheet" data-type="label" data-open-sheet="virt">Δτ₀<br>(T.2)</td>
+        <!-- ✅ открывает Таблицу 2 -->
+        <td rowspan="2" data-type="label" data-open-sheet="t2">Δτ₀<br>(T.2)</td>
         <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td rowspan="2" class="align-left" colspan="3" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">αw₀ = </span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
 
         <td rowspan="2" class="align-left" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">W₀ = </span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
 
@@ -578,16 +588,7 @@
         <td rowspan="2" class="align-left" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">Wᵧ = <br>(T.3)</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
         <td class="is-inactive" data-type="label"></td>
@@ -604,225 +605,147 @@
       <tr class="row">
         <td data-type="label">200</td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td colspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
         <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" />
+          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
         </td>
 
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">02-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">400</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">04-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">800</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">08-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">1200</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">12-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">1600</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">16-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">2000</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">20-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">2400</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">24-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">3000</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">30-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
 
       <tr class="row">
         <td data-type="label">4000</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
+        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
         <td colspan="2" class="has-prefix" data-type="label">
           <div class="prefix-wrap">
             <span class="prefix">40-</span>
-            <input
-              class="prefix-input"
-              type="text"
-              inputmode="text"
-              pattern="*"
-              autocomplete="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-label=""
-            />
+            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
           </div>
         </td>
       </tr>
     </table>
   </div>
 
-  <!-- Overlay + Bottom Sheet -->
+  <!-- Overlay (общий) -->
   <div class="sheet-overlay" data-sheet-close></div>
 
-  <section class="bottom-sheet" role="dialog" aria-modal="true" aria-label="Віртуальні поправки" aria-hidden="true">
+  <!-- ========================
+       Bottom Sheet — Table 1
+       ======================== -->
+  <section class="bottom-sheet sheet-virt" role="dialog" aria-modal="true" aria-label="Віртуальні поправки" aria-hidden="true">
     <div class="sheet-header">
       <div style="width:100%">
         <div class="sheet-handle" aria-hidden="true"></div>
@@ -864,57 +787,284 @@
     </div>
   </section>
 
+  <!-- ========================
+       Bottom Sheet — Table 2
+       ======================== -->
+  <section class="bottom-sheet sheet-t2" role="dialog" aria-modal="true" aria-label="Середні відхилення температури" aria-hidden="true">
+    <div class="sheet-header">
+      <div style="width:100%">
+        <div class="sheet-handle" aria-hidden="true"></div>
+        <div class="sheet-title">Середні відхилення температури</div>
+      </div>
+      <button class="sheet-close" type="button" aria-label="Закрити" data-sheet-close>✕</button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="t2-wrap">
+        <div class="t2-headline">
+          <div class="t2-h">Середні відхилення температури</div>
+          <div class="t2-id">Таблиця 2</div>
+        </div>
+
+        <div class="t2-scroll">
+          <table class="t2-table" aria-label="Таблиця 2 — Середні відхилення температури Δτy в залежності від Δτ0">
+            <tr>
+              <th class="t2-title" colspan="15">Середні відхилення температури Δτᵧ в залежності від Δτ₀</th>
+            </tr>
+            <tr>
+              <th class="t2-y" rowspan="2">Y, м</th>
+              <th class="t2-sub" colspan="14">Δτ₀, град</th>
+            </tr>
+            <tr>
+              <th class="t2-tophead">1</th>
+              <th class="t2-tophead">2</th>
+              <th class="t2-tophead">3</th>
+              <th class="t2-tophead">4</th>
+              <th class="t2-tophead">5</th>
+              <th class="t2-tophead">6</th>
+              <th class="t2-tophead">7</th>
+              <th class="t2-tophead">8</th>
+              <th class="t2-tophead">9</th>
+              <th class="t2-tophead">10</th>
+              <th class="t2-tophead">20</th>
+              <th class="t2-tophead">30</th>
+              <th class="t2-tophead">40</th>
+              <th class="t2-tophead">50</th>
+            </tr>
+
+            <!-- 02 -->
+            <tr>
+              <th class="t2-y">02</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−8</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−8</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−9</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−20</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−29</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−39</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−49</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 04 -->
+            <tr>
+              <th class="t2-y">04</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−8</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−9</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−19</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−29</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−38</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−48</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 08 -->
+            <tr>
+              <th class="t2-y">08</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−8</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−18</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−28</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−37</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−46</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 12 -->
+            <tr>
+              <th class="t2-y">12</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−8</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−17</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−26</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−35</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−44</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 16 -->
+            <tr>
+              <th class="t2-y">16</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−17</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−25</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−34</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−42</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 20 -->
+            <tr>
+              <th class="t2-y">20</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−16</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−24</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−32</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−40</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 24 -->
+            <tr>
+              <th class="t2-y">24</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−7</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−15</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−23</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−31</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−38</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 30 -->
+            <tr>
+              <th class="t2-y">30</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−15</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−22</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−30</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−37</div><div class="pos na">—</div></div></td>
+            </tr>
+
+            <!-- 40 -->
+            <tr>
+              <th class="t2-y">40</th>
+              <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+2</div></div></td>
+              <td><div class="t2cell"><div class="neg">−2</div><div class="pos">+3</div></div></td>
+              <td><div class="t2cell"><div class="neg">−3</div><div class="pos">+4</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+5</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+6</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+7</div></div></td>
+              <td><div class="t2cell"><div class="neg">−4</div><div class="pos">+8</div></div></td>
+              <td><div class="t2cell"><div class="neg">−5</div><div class="pos">+9</div></div></td>
+              <td><div class="t2cell"><div class="neg">−6</div><div class="pos">+10</div></div></td>
+              <td><div class="t2cell"><div class="neg">−14</div><div class="pos">+20</div></div></td>
+              <td><div class="t2cell"><div class="neg">−20</div><div class="pos">+30</div></div></td>
+              <td><div class="t2cell"><div class="neg">−27</div><div class="pos na">—</div></div></td>
+              <td><div class="t2cell"><div class="neg">−31</div><div class="pos na">—</div></div></td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script>
-    // Фокус по клику в td (и для обычных td.has-input, и для префиксных td.has-prefix)
+    // (оставил только удобный фокус в input при клике по td)
     document.addEventListener('click', (e) => {
       const td = e.target.closest('td.has-input, td.has-prefix');
       if (!td) return;
-
-      // если кликнули прямо по инпуту — не мешаем
       if (e.target.matches('input')) return;
-
       const input = td.querySelector('input');
       if (input) input.focus({ preventScroll: true });
     }, { passive: true });
 
-    // ===== Bottom sheet logic =====
-    const root = document.documentElement;
-    const sheet = document.querySelector('.bottom-sheet');
-    const overlay = document.querySelector('.sheet-overlay');
+    const sheetVirt = document.querySelector('.sheet-virt');
+    const sheetT2   = document.querySelector('.sheet-t2');
 
-    function openSheet(){
-      document.body.classList.add('sheet-open');
-      sheet.setAttribute('aria-hidden', 'false');
+    function openSheet(which){
+      // закрыть всё
+      document.body.classList.remove('sheet-open-virt', 'sheet-open-t2');
+      sheetVirt.setAttribute('aria-hidden', 'true');
+      sheetT2.setAttribute('aria-hidden', 'true');
 
-      // чтобы фон не скроллился под sheet
+      // открыть нужное
+      if (which === 'virt'){
+        document.body.classList.add('sheet-open-virt');
+        sheetVirt.setAttribute('aria-hidden', 'false');
+      } else if (which === 't2'){
+        document.body.classList.add('sheet-open-t2');
+        sheetT2.setAttribute('aria-hidden', 'false');
+      }
+
       document.body.style.overflow = 'hidden';
     }
 
-    function closeSheet(){
-      document.body.classList.remove('sheet-open');
-      sheet.setAttribute('aria-hidden', 'true');
+    function closeSheets(){
+      document.body.classList.remove('sheet-open-virt', 'sheet-open-t2');
+      sheetVirt.setAttribute('aria-hidden', 'true');
+      sheetT2.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
 
-    // Открытие: клик по td с data-open-sheet="virt"
+    // open by click on cell markers (T.1 / T.2)
     document.addEventListener('click', (e) => {
-      const opener = e.target.closest('[data-open-sheet="virt"]');
+      const opener = e.target.closest('[data-open-sheet]');
       if (!opener) return;
-
-      // если вдруг в этой ячейке окажется input — не открываем
       if (e.target.matches('input')) return;
-
-      openSheet();
+      openSheet(opener.getAttribute('data-open-sheet'));
     });
 
-    // Закрытие: overlay / кнопка ✕
+    // close by overlay or X
     document.addEventListener('click', (e) => {
-      if (e.target.closest('[data-sheet-close]')) closeSheet();
+      if (e.target.closest('[data-sheet-close]')) closeSheets();
     });
 
-    // ESC
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.body.classList.contains('sheet-open')) closeSheet();
+      if (e.key !== 'Escape') return;
+      if (document.body.classList.contains('sheet-open-virt') || document.body.classList.contains('sheet-open-t2')) {
+        closeSheets();
+      }
     });
   </script>
 </body>
