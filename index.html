@@ -675,6 +675,15 @@
         gap:4px;
         padding:0 4px;
       }
+
+      /* подпись-результат справа от αw₀ */
+      .calc-badge{
+        white-space:nowrap;
+        flex:0 0 auto;
+        opacity:.85;
+        font-weight:700;
+        margin-left:6px;
+      }
     }
   </style>
 </head>
@@ -682,305 +691,308 @@
 <body>
   <div class="page">
     <table aria-label="Бланк складання наближеного бюлетеня метеосередній">
-      <tr>
-        <th class="title" colspan="8" data-type="label">
-          <div>БЛАНК СКЛЛАДАННЯ НАБЛИЖЕНОГО БЮЛЕТЕНЯ МЕТЕОСЕРЕДНІЙ</div>
-          <div>ЗА ДАНИМИ ДМК</div>
-        </th>
-      </tr>
+  <tr>
+    <th class="title" colspan="8" data-type="label">
+      <div>БЛАНК СКЛЛАДАННЯ НАБЛИЖЕНОГО БЮЛЕТЕНЯ МЕТЕОСЕРЕДНІЙ</div>
+      <div>ЗА ДАНИМИ ДМК</div>
+    </th>
+  </tr>
 
-      <!-- Ряд 1 -->
-      <tr class="row">
-        <td rowspan="2" data-type="label">t₀</td>
-        <td rowspan="2" class="has-input" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
+  <!-- Ряд 1 -->
+  <tr class="row">
+    <td rowspan="2" data-type="label">t₀</td>
+    <td rowspan="2" class="has-input" data-type="label">
+      <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    </td>
 
-        <td rowspan="2" data-type="label">H₀</td>
-        <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td class="is-inactive" data-type="label"></td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-      </tr>
+    <td rowspan="2" data-type="label">H₀</td>
+    <td rowspan="2" class="has-input" data-type="label">
+      <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    </td>
 
-      <!-- Ряд 2 -->
-      <tr class="row">
-        <td class="is-inactive" data-type="label"></td>
-        <td data-type="label">день</td>
-        <td data-type="label">час</td>
-        <td data-type="label">хв</td>
-      </tr>
+    <td class="is-inactive" data-type="label"></td>
 
-      <!-- Ряд 3 -->
-      <tr class="row">
-        <td rowspan="2" data-type="label" data-open-sheet="virt">+ΔTᵥ<br>(T.1)</td>
-        <td rowspan="2" data-type="label"></td>
-        <td class="cell-tau" rowspan="2" data-type="label">-Hno</td>
-        <td class="cell-neg" rowspan="2" data-type="label">750</td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-      </tr>
+    <!-- ✅ оставили input: день/час/хв -->
+    <td class="has-input" data-type="label">
+      <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    </td>
+    <td class="has-input" data-type="label">
+      <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    </td>
+    <td class="has-input" data-type="label">
+      <input class="cell-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    </td>
+  </tr>
 
-      <!-- Ряд 4 -->
-      <tr class="row">
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-      </tr>
+  <!-- Ряд 2 -->
+  <tr class="row">
+    <td class="is-inactive" data-type="label"></td>
+    <td data-type="label">день</td>
+    <td data-type="label">час</td>
+    <td data-type="label">хв</td>
+  </tr>
 
-      <!-- Ряд 5 -->
-      <tr class="row">
-        <td rowspan="2" data-type="label">τ₀</td>
-        <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td rowspan="2" data-type="label">ΔH₀</td>
-        <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td data-type="label">ΔH₀</td>
-        <td data-type="label">Δτ₀</td>
-      </tr>
+  <!-- Ряд 3 -->
+  <tr class="row">
+    <td rowspan="2" data-type="label" data-open-sheet="virt">+ΔTᵥ<br>(T.1)</td>
+    <!-- ✅ ΔTᵥ будет тут (output) -->
+    <td rowspan="2" data-type="label" data-out="dTv"></td>
 
-      <!-- Ряд 6 -->
-      <tr class="row">
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-      </tr>
+    <td class="cell-tau" rowspan="2" data-type="label">-Hno</td>
+    <td class="cell-neg" rowspan="2" data-type="label">750</td>
 
-      <!-- Ряд 7 -->
-      <tr class="row">
-        <td class="cell-tau" rowspan="2" data-type="label">-τₙ⁰</td>
-        <td class="cell-neg" rowspan="2" data-type="label">-15,9</td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-      </tr>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+  </tr>
 
-      <!-- Ряд 8 -->
-      <tr class="row">
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-        <td data-type="label">h, мп</td>
-      </tr>
+  <!-- Ряд 4 -->
+  <tr class="row">
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
 
-      <!-- Ряд 9 -->
-      <tr class="row">
-        <td rowspan="2" data-type="label" data-open-sheet="t2">Δτ₀<br>(T.2)</td>
-        <td rowspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td class="align-left" rowspan="2" colspan="2" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">αw₀ = </span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
+    <!-- ✅ “положка” над ΔH₀ / Δτ₀ справа -->
+    <td data-type="label" data-out="slotDH0"></td>
+    <td data-type="label" data-out="slotDTau0"></td>
+  </tr>
 
-        <td class="align-left" rowspan="2" colspan="2" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">W₀ = </span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
+  <!-- Ряд 5 -->
+  <tr class="row">
+    <td rowspan="2" data-type="label">τ₀</td>
+    <!-- ✅ τ₀ output -->
+    <td rowspan="2" data-type="label" data-out="tau0"></td>
 
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-      </tr>
+    <td rowspan="2" data-type="label">ΔH₀</td>
+    <!-- ✅ ΔH₀ output -->
+    <td rowspan="2" data-type="label" data-out="dH0"></td>
 
-      <!-- Ряд 10 -->
-      <tr class="row">
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-      </tr>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
 
-      <!-- Ряд 11 -->
-      <tr class="row">
-        <td rowspan="2" data-type="label">Yб</td>
-        <td rowspan="2" data-type="label">Δτᵧ</td>
-        <td rowspan="2" data-type="label">Δαwᵧ</td>
-        <td rowspan="2" data-type="label">αw₀ + αwᵧ</td>
-        <td class="align-left" rowspan="2" colspan="2" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix sheet-link" data-open-sheet="t3">Wᵧ = <br>(T.3)</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
+    <td data-type="label">ΔH₀</td>
+    <td data-type="label">Δτ₀</td>
+  </tr>
 
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-      </tr>
+  <!-- Ряд 6 -->
+  <tr class="row">
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+  </tr>
 
-      <!-- Ряд 12 -->
-      <tr class="row">
-        <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
-      </tr>
+  <!-- Ряд 7 -->
+  <tr class="row">
+    <td class="cell-tau" rowspan="2" data-type="label">-τₙ⁰</td>
+    <td class="cell-neg" rowspan="2" data-type="label">-15,9</td>
 
-      <!-- Ряд 13 и ниже -->
-      <tr class="row">
-        <td data-type="label">200</td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
-        <td colspan="2" data-type="label">
-          <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-        </td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
 
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">02-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+    <!-- ✅ оставили input: h, мп -->
+    <td class="has-input" data-type="label">
+      <input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+    </td>
+  </tr>
 
-      <tr class="row">
-        <td data-type="label">400</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">04-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+  <!-- Ряд 8 -->
+  <tr class="row">
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+    <td data-type="label">h, мп</td>
+  </tr>
 
-      <tr class="row">
-        <td data-type="label">800</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">08-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+  <!-- Ряд 9 -->
+  <tr class="row">
+    <td rowspan="2" data-type="label" data-open-sheet="t2">Δτ₀<br>(T.2)</td>
+    <!-- ✅ Δτ₀ output -->
+    <td rowspan="2" data-type="label" data-out="dTau0"></td>
 
-      <tr class="row">
-        <td data-type="label">1200</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">12-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+    <!-- ✅ оставили input: αw₀ -->
+    <td class="align-left" rowspan="2" colspan="2" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">αw₀ = </span>
+        <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+      </div>
+    </td>
 
-      <tr class="row">
-        <td data-type="label">1600</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">16-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+    <!-- ✅ оставили input: W₀ -->
+    <td class="align-left" rowspan="2" colspan="2" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">W₀ = </span>
+        <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
+      </div>
+    </td>
 
-      <tr class="row">
-        <td data-type="label">2000</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">20-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+  </tr>
 
-      <tr class="row">
-        <td data-type="label">2400</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">24-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+  <!-- Ряд 10 -->
+  <tr class="row">
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+  </tr>
 
-      <tr class="row">
-        <td data-type="label">3000</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">30-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
+  <!-- Ряд 11 (шапка) -->
+  <tr class="row">
+    <td rowspan="2" data-type="label">Yб</td>
+    <td rowspan="2" data-type="label">Δτᵧ</td>
+    <td rowspan="2" data-type="label">Δαwᵧ</td>
+    <td rowspan="2" data-type="label">αw₀ + αwᵧ</td>
 
-      <tr class="row">
-        <td data-type="label">4000</td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" data-type="label"><input class="cell-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" /></td>
-        <td colspan="2" class="has-prefix" data-type="label">
-          <div class="prefix-wrap">
-            <span class="prefix">40-</span>
-            <input class="prefix-input" type="text" inputmode="text" pattern="*" autocomplete="off" autocapitalize="off" spellcheck="false" />
-          </div>
-        </td>
-      </tr>
-    </table>
+    <!-- ❌ убрали input Wᵧ, оставили только ссылку на T.3 -->
+    <td class="align-left" rowspan="2" colspan="2" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix sheet-link" data-open-sheet="t3">Wᵧ = <br>(T.3)</span>
+      </div>
+    </td>
+
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+  </tr>
+
+  <!-- Ряд 12 -->
+  <tr class="row">
+    <td class="is-inactive" data-type="label"></td>
+    <td class="is-inactive" data-type="label"></td>
+  </tr>
+
+  <!-- ====== Данные (без input) ====== -->
+  <tr class="row" data-y="200">
+    <td data-type="label">200</td>
+    <td data-type="label" data-out="dtauy-200"></td>
+    <td class="cell-neg" data-type="label">1-00</td>
+    <td data-type="label" data-out="asum-200"></td>
+    <td colspan="2" data-type="label" data-out="wy-200"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">02-</span>
+        <span class="prefix-input" data-out="bundle-200"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="400">
+    <td data-type="label">400</td>
+    <td data-type="label" data-out="dtauy-400"></td>
+    <td class="cell-neg" data-type="label">2-00</td>
+    <td data-type="label" data-out="asum-400"></td>
+    <td colspan="2" data-type="label" data-out="wy-400"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">04-</span>
+        <span class="prefix-input" data-out="bundle-400"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="800">
+    <td data-type="label">800</td>
+    <td data-type="label" data-out="dtauy-800"></td>
+    <td class="cell-neg" data-type="label">3-00</td>
+    <td data-type="label" data-out="asum-800"></td>
+    <td colspan="2" data-type="label" data-out="wy-800"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">08-</span>
+        <span class="prefix-input" data-out="bundle-800"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="1200">
+    <td data-type="label">1200</td>
+    <td data-type="label" data-out="dtauy-1200"></td>
+    <td class="cell-neg" data-type="label">3-00</td>
+    <td data-type="label" data-out="asum-1200"></td>
+    <td colspan="2" data-type="label" data-out="wy-1200"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">12-</span>
+        <span class="prefix-input" data-out="bundle-1200"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="1600">
+    <td data-type="label">1600</td>
+    <td data-type="label" data-out="dtauy-1600"></td>
+    <td class="cell-neg" data-type="label">4-00</td>
+    <td data-type="label" data-out="asum-1600"></td>
+    <td colspan="2" data-type="label" data-out="wy-1600"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">16-</span>
+        <span class="prefix-input" data-out="bundle-1600"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="2000">
+    <td data-type="label">2000</td>
+    <td data-type="label" data-out="dtauy-2000"></td>
+    <td class="cell-neg" data-type="label">4-00</td>
+    <td data-type="label" data-out="asum-2000"></td>
+    <td colspan="2" data-type="label" data-out="wy-2000"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">20-</span>
+        <span class="prefix-input" data-out="bundle-2000"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="2400">
+    <td data-type="label">2400</td>
+    <td data-type="label" data-out="dtauy-2400"></td>
+    <td class="cell-neg" data-type="label">4-00</td>
+    <td data-type="label" data-out="asum-2400"></td>
+    <td colspan="2" data-type="label" data-out="wy-2400"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">24-</span>
+        <span class="prefix-input" data-out="bundle-2400"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="3000">
+    <td data-type="label">3000</td>
+    <td data-type="label" data-out="dtauy-3000"></td>
+    <td class="cell-neg" data-type="label">5-00</td>
+    <td data-type="label" data-out="asum-3000"></td>
+    <td colspan="2" data-type="label" data-out="wy-3000"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">30-</span>
+        <span class="prefix-input" data-out="bundle-3000"></span>
+      </div>
+    </td>
+  </tr>
+
+  <tr class="row" data-y="4000">
+    <td data-type="label">4000</td>
+    <td data-type="label" data-out="dtauy-4000"></td>
+    <td class="cell-neg" data-type="label">5-00</td>
+    <td data-type="label" data-out="asum-4000"></td>
+    <td colspan="2" data-type="label" data-out="wy-4000"></td>
+    <td colspan="2" class="has-prefix" data-type="label">
+      <div class="prefix-wrap">
+        <span class="prefix">40-</span>
+        <span class="prefix-input" data-out="bundle-4000"></span>
+      </div>
+    </td>
+  </tr>
+</table>
+
   </div>
 
   <!-- Overlay (общий) -->
@@ -1379,8 +1391,8 @@
     </div>
   </section>
 
-  <script>
-  // (оставил только удобный фокус в input при клике по td)
+<script>
+  // Фокус в input при клике по td
   document.addEventListener('click', (e) => {
     const td = e.target.closest('td.has-input, td.has-prefix');
     if (!td) return;
@@ -1409,7 +1421,6 @@
       document.body.classList.add('sheet-open-t3');
       sheetT3.setAttribute('aria-hidden', 'false');
     }
-
     document.body.style.overflow = 'hidden';
   }
 
@@ -1433,24 +1444,15 @@
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    if (
-      document.body.classList.contains('sheet-open-virt') ||
-      document.body.classList.contains('sheet-open-t2') ||
-      document.body.classList.contains('sheet-open-t3')
-    ) closeSheets();
+    if (e.key === 'Escape') closeSheets();
   });
 
   // =========================
-  // Utils: parse/format numbers
+  // Utils
   // =========================
   function parseUAFloat(raw){
     if (raw == null) return null;
-    const s = String(raw)
-      .trim()
-      .replace(/\s+/g, "")
-      .replace(/−/g, "-")
-      .replace(/,/g, ".");
+    const s = String(raw).trim().replace(/\s+/g, "").replace(/−/g, "-").replace(/,/g, ".");
     if (!s) return null;
     if (!/^[+-]?\d+(\.\d+)?$/.test(s)) return null;
     const n = Number(s);
@@ -1459,14 +1461,94 @@
 
   function formatUA(n, maxDp = 1){
     if (n == null || !Number.isFinite(n)) return "";
-    // аккуратно: 1 знак после запятой по умолчанию, но без лишних нулей
     const s = n.toFixed(maxDp);
     const trimmed = s.replace(/\.0+$/,"").replace(/(\.\d*[1-9])0+$/,"$1");
     return trimmed.replace(".", ",");
   }
 
+  function pad2Signed(n){
+    if (!Number.isFinite(n)) return "";
+    const sign = n < 0 ? "-" : "";
+    const a = Math.abs(Math.trunc(n));
+    return sign + (a < 10 ? ("0" + a) : String(a));
+  }
+
+  function pad2Abs(n){
+    if (!Number.isFinite(n)) return "";
+    const a = Math.abs(Math.trunc(n));
+    return a < 10 ? ("0" + a) : String(a);
+  }
+
   // =========================
-  // Table 1 logic (как у тебя)
+  // Inputs (оставшиеся)
+  // =========================
+  function getT0Input(){
+    const label = Array.from(document.querySelectorAll('td[data-type="label"]'))
+      .find(td => td.textContent.trim() === "t₀");
+    return label?.nextElementSibling?.querySelector('input.cell-input') || null;
+  }
+
+  function getH0Input(){
+    const label = Array.from(document.querySelectorAll('td[data-type="label"]'))
+      .find(td => td.textContent.trim() === "H₀");
+    return label?.nextElementSibling?.querySelector('input.cell-input') || null;
+  }
+
+  function getAlphaW0Input(){
+    const wraps = Array.from(document.querySelectorAll('.prefix-wrap'));
+    for (const w of wraps){
+      const p = w.querySelector('.prefix');
+      const txt = (p?.textContent || "").replace(/\s+/g, "");
+      if (txt.startsWith("αw₀=")) return w.querySelector('input.prefix-input') || null;
+    }
+    return null;
+  }
+
+  function getW0Input(){
+    const wraps = Array.from(document.querySelectorAll('.prefix-wrap'));
+    for (const w of wraps){
+      const p = w.querySelector('.prefix');
+      const txt = (p?.textContent || "").replace(/\s+/g, "");
+      if (txt.startsWith("W₀=")) return w.querySelector('input.prefix-input') || null;
+    }
+    return null;
+  }
+
+  // h, мп (оставленный input)
+  function getHmpInput(){
+    // это последний td в ряду 7 (там остался input)
+    const label = Array.from(document.querySelectorAll('td[data-type="label"]'))
+      .find(td => td.textContent.trim() === "-τₙ⁰");
+    const row7 = label?.closest('tr');
+    const inputTd = row7?.querySelector('td.has-input:last-child');
+    return inputTd?.querySelector('input.cell-input') || null;
+  }
+
+  // =========================
+  // Outputs (теперь не input)
+  // =========================
+  const out = (key) => document.querySelector(`[data-out="${key}"]`);
+
+  // ΔTᵥ td (ряд 3, второй td)
+  function getDeltaTvTd(){ return out("dTv"); }
+  function getTau0Td(){ return out("tau0"); }
+  function getDeltaH0Td(){ return out("dH0"); }
+  function getDeltaTau0Td(){ return out("dTau0"); }
+
+  // правые верхние слоты
+  function getSlotDH0(){ return out("slotDH0"); }
+  function getSlotDTau0(){ return out("slotDTau0"); }
+
+  // -τₙ⁰ значение
+  function getNegTauN0Value(){
+    const labelTd = Array.from(document.querySelectorAll('td[data-type="label"]'))
+      .find(td => td.textContent.trim() === "-τₙ⁰");
+    const valTd = labelTd?.nextElementSibling || null;
+    return parseUAFloat(valTd?.textContent ?? null);
+  }
+
+  // =========================
+  // Table 1
   // =========================
   const TABLE1 = [
     { head: "Нижче 0", anchor: -1,   delta: "0"    },
@@ -1479,52 +1561,150 @@
   ];
 
   function findClosestTable1Delta(t){
-    let bestIdx = 0;
-    let bestDist = Infinity;
-    for (let i = 0; i < TABLE1.length; i++){
-      const dist = Math.abs(t - TABLE1[i].anchor);
-      if (dist < bestDist){
-        bestDist = dist;
-        bestIdx = i;
-      }
+    let best = TABLE1[0], bestDist = Infinity;
+    for (const item of TABLE1){
+      const d = Math.abs(t - item.anchor);
+      if (d < bestDist){ bestDist = d; best = item; }
     }
-    return TABLE1[bestIdx];
+    return best;
   }
 
-  function getT0Input(){
-    const allTds = Array.from(document.querySelectorAll('td[data-type="label"]'));
-    const t0LabelTd = allTds.find(td => td.textContent.trim() === "t₀");
-    const t0Input = t0LabelTd?.nextElementSibling?.querySelector("input.cell-input");
-    return t0Input || null;
-  }
+  function updateDeltaTvFromT0(){
+    const t0 = parseUAFloat(getT0Input()?.value);
+    const outTd = getDeltaTvTd();
+    if (!outTd) return;
 
-  function getDeltaTvOutputTd(){
-    const openerTd = document.querySelector('td[data-open-sheet="virt"]');
-    return openerTd?.nextElementSibling || null;
+    if (t0 == null){
+      outTd.textContent = "";
+      recalcAll();
+      return;
+    }
+
+    const picked = findClosestTable1Delta(t0);
+    outTd.textContent = picked.delta;
+    recalcAll();
   }
 
   // =========================
-  // NEW: τ0 / Δτ0 / Table2 lookup
+  // ΔH₀ = H₀ - 750 (как было)
   // =========================
+  function updateDeltaH0FromH0(){
+    const h0 = parseUAFloat(getH0Input()?.value);
+    const dH0Td = getDeltaH0Td();
+    if (!dH0Td) return;
 
-  function getTau0Input(){
-    const allTds = Array.from(document.querySelectorAll('td[data-type="label"]'));
-    const tau0LabelTd = allTds.find(td => td.textContent.trim() === "τ₀");
-    return tau0LabelTd?.nextElementSibling?.querySelector("input.cell-input") || null;
+    if (h0 == null){
+      dH0Td.textContent = "";
+      updateRightTopSlots();
+      return;
+    }
+
+    const dH0 = h0 - 750;
+    dH0Td.textContent = formatUA(dH0, 1);
+    updateRightTopSlots();
   }
 
-  function getDeltaTau0Input(){
-    // Ячейка "Δτ₀ (T.2)" в основном листе — рядом input (ряд 9, 2-я)
-    const openerTd = document.querySelector('td[data-open-sheet="t2"]'); // Δτ₀ (T.2)
-    return openerTd?.nextElementSibling?.querySelector("input.cell-input") || null;
+  // =========================
+  // αw₀ badge "(x : 6 = y)"
+  // =========================
+  function ensureAlphaW0Badge(){
+    const input = getAlphaW0Input();
+    if (!input) return null;
+    const wrap = input.closest('.prefix-wrap');
+    if (!wrap) return null;
+
+    let badge = wrap.querySelector('.calc-badge');
+    if (!badge){
+      badge = document.createElement('span');
+      badge.className = 'calc-badge';
+      wrap.appendChild(badge);
+    }
+    return { input, badge };
   }
 
-  function getNegTauN0Value(){
-    // Берём число из ячейки "-15,9" (ряд 7, 2-я)
-    const allTds = Array.from(document.querySelectorAll('td[data-type="label"]'));
-    const labelTd = allTds.find(td => td.textContent.trim() === "-τₙ⁰");
-    const valTd = labelTd?.nextElementSibling || null;
-    return parseUAFloat(valTd?.textContent ?? null);
+  function updateAlphaW0Badge(){
+    const pair = ensureAlphaW0Badge();
+    if (!pair) return;
+
+    const raw = (pair.input.value ?? "").trim();
+    const n = parseUAFloat(raw);
+
+    if (n == null){
+      pair.badge.textContent = '';
+      pair.input.dataset.aw0Rounded = "";
+      updateAlphaSums();
+      updateBundles();
+      return;
+    }
+
+    const rounded = Math.round(n / 6);
+    pair.badge.textContent = `(${raw.replace(/−/g,"-")} : 6 = ${rounded})`;
+    pair.input.dataset.aw0Rounded = String(rounded);
+
+    updateAlphaSums();
+    updateBundles();
+  }
+
+  function getAlphaW0Rounded(){
+    const a = getAlphaW0Input();
+    const v = a?.dataset?.aw0Rounded;
+    if (!v) return null;
+    const n = parseInt(v, 10);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  // =========================
+  // τ₀ / Δτ₀ / Table 2
+  // =========================
+  function updateTau0AndDeltaTau0(){
+    const t0 = parseUAFloat(getT0Input()?.value);
+    const dTv = parseUAFloat(getDeltaTvTd()?.textContent);
+    const negTauN0 = getNegTauN0Value();
+
+    const tau0Td = getTau0Td();
+    const dTau0Td = getDeltaTau0Td();
+
+    if (!tau0Td || !dTau0Td) return;
+
+    if (t0 == null || dTv == null || negTauN0 == null){
+      tau0Td.textContent = "";
+      dTau0Td.textContent = "";
+      updateRightTopSlots();
+      clearTable2Outputs();
+      return;
+    }
+
+    const tau0 = t0 + dTv;
+    tau0Td.textContent = formatUA(tau0, 1);
+
+    const dTau0 = negTauN0 + tau0;
+    dTau0Td.textContent = formatUA(dTau0, 1);
+
+    updateRightTopSlots();
+    fillTable2Outputs(dTau0);
+  }
+
+  function updateRightTopSlots(){
+    const slotDH0 = getSlotDH0();
+    const slotDTau0 = getSlotDTau0();
+    if (!slotDH0 || !slotDTau0) return;
+
+    const dh = parseUAFloat(getDeltaH0Td()?.textContent);
+    const dt = parseUAFloat(getDeltaTau0Td()?.textContent);
+
+    if (dh == null) slotDH0.textContent = "";
+    else {
+      let v = Math.round(dh);
+      if (v < 0) v = v - 500;
+      slotDH0.textContent = String(v);
+    }
+
+    if (dt == null) slotDTau0.textContent = "";
+    else {
+      let v = Math.round(dt);
+      if (v < 0) v = v - 50;
+      slotDTau0.textContent = String(v);
+    }
   }
 
   // ---- Table2 parsing ----
@@ -1534,31 +1714,25 @@
 
     const colHeads = Array.from(t2.querySelectorAll('tr:nth-child(3) th.t2-tophead'))
       .map(th => parseInt(th.textContent.trim(), 10))
-      .filter(n => Number.isFinite(n));
+      .filter(Number.isFinite);
 
-    const map = {}; // map[rowKey]["20"] = {neg, pos}
+    const map = {};
     const dataRows = Array.from(t2.querySelectorAll('tr')).filter(tr => tr.querySelector('th.t2-y'));
 
     for (const tr of dataRows){
-      const rowKey = tr.querySelector('th.t2-y')?.textContent.trim(); // "02", "04"...
+      const rowKey = tr.querySelector('th.t2-y')?.textContent.trim();
       if (!rowKey) continue;
 
       const tds = Array.from(tr.querySelectorAll('td'));
       map[rowKey] = map[rowKey] || {};
 
       for (let i = 0; i < tds.length && i < colHeads.length; i++){
-        const col = colHeads[i]; // 1..10,20,30,40,50
-
+        const col = colHeads[i];
         const negText = tds[i].querySelector('.t2cell .neg')?.textContent?.trim() ?? "";
         const posText = tds[i].querySelector('.t2cell .pos')?.textContent?.trim() ?? "";
-
         const neg = parseUAFloat(negText);
         const pos = (posText === "—") ? null : parseUAFloat(posText);
-
-        map[rowKey][String(col)] = {
-          neg: Number.isFinite(neg) ? neg : null,
-          pos: Number.isFinite(pos) ? pos : null,
-        };
+        map[rowKey][String(col)] = { neg: Number.isFinite(neg) ? neg : null, pos: Number.isFinite(pos) ? pos : null };
       }
     }
 
@@ -1567,203 +1741,259 @@
 
   const TABLE2_MAP = buildTable2Map();
 
-  // разложение: 23 -> {tens:20, ones:3} ; 7 -> {tens:0, ones:7} ; 20 -> {tens:20, ones:0}
+  const Y_TO_ROWKEY = {
+    200: "02", 400: "04", 800: "08", 1200: "12", 1600: "16",
+    2000: "20", 2400: "24", 3000: "30", 4000: "40",
+  };
+
   function splitDeltaTau0(absInt){
     const tens = Math.floor(absInt / 10) * 10;
     const ones = absInt - tens;
     return { tens, ones };
   }
 
-  // получить значение из T2 по строке (02/04/...) и колонке (1..10,20,30,40,50)
   function getT2Value(rowKey, col, sign){
-    if (!TABLE2_MAP) return null;
-    const row = TABLE2_MAP[rowKey];
-    if (!row) return null;
-    const cell = row[String(col)];
+    const row = TABLE2_MAP?.[rowKey];
+    const cell = row?.[String(col)];
     if (!cell) return null;
-
-    // sign: +1 или -1
-    if (sign >= 0){
-      return cell.pos; // может быть null (если "—")
-    }
-    return cell.neg;
+    return (sign >= 0) ? cell.pos : cell.neg;
   }
 
-  // находим строку в основном листе по "200/400/..." и возвращаем первый input после неё (Δτᵧ)
-  function getMainRowDeltaTauYInputByY(y){
-    const table = document.querySelector('.page table');
-    if (!table) return null;
-
-    const rows = Array.from(table.querySelectorAll('tr'));
-    for (const tr of rows){
-      const firstTd = tr.querySelector('td');
-      if (!firstTd) continue;
-      if (firstTd.textContent.trim() === String(y)){
-        const tds = Array.from(tr.querySelectorAll('td'));
-        // td[0] = y label, td[1] = input (Δτᵧ) -> внутри input.cell-input
-        const input = tds[1]?.querySelector('input.cell-input') || null;
-        return input;
-      }
+  function clearTable2Outputs(){
+    for (const yStr of Object.keys(Y_TO_ROWKEY)){
+      const td = out(`dtauy-${yStr}`);
+      if (td) td.textContent = "";
     }
-    return null;
+    updateBundles();
   }
 
-  const Y_TO_ROWKEY = {
-    200: "02",
-    400: "04",
-    800: "08",
-    1200:"12",
-    1600:"16",
-    2000:"20",
-    2400:"24",
-    3000:"30",
-    4000:"40",
-  };
-
-  function updateTau0_DeltaTau0_AndFillTable2(){
-    const t0Input = getT0Input();
-    const deltaTvTd = getDeltaTvOutputTd();
-    const tau0Input = getTau0Input();
-    const deltaTau0Input = getDeltaTau0Input();
-    const negTauN0 = getNegTauN0Value();
-
-    if (!t0Input || !deltaTvTd || !tau0Input || !deltaTau0Input) return;
-
-    const t0 = parseUAFloat(t0Input.value);
-    const deltaTv = parseUAFloat(deltaTvTd.textContent);
-
-    // если нет исходных данных — чистим зависимые поля
-    if (t0 === null || deltaTv === null || negTauN0 === null){
-      tau0Input.value = "";
-      // Δτ₀ чистим тоже
-      deltaTau0Input.value = "";
-
-      // чистим автозаполнения Δτᵧ
-      for (const y of Object.keys(Y_TO_ROWKEY)){
-        const inp = getMainRowDeltaTauYInputByY(y);
-        if (inp) inp.value = "";
-      }
-      return;
-    }
-
-    // 1) τ₀ = t₀ + ΔTᵥ
-    const tau0 = t0 + deltaTv;
-    tau0Input.value = formatUA(tau0, 1);
-
-    // 2) Δτ₀ = (−τₙ⁰) − τ₀
-    const deltaTau0 = negTauN0 + tau0;
-    deltaTau0Input.value = formatUA(deltaTau0, 1);
-
-    // 3) lookup по Таблице 2
-    // Таблица 2 по колонкам целочисленная => берём |Δτ₀| округлением до ближайшего целого
+  function fillTable2Outputs(deltaTau0){
     const absInt = Math.round(Math.abs(deltaTau0));
     const sign = deltaTau0 >= 0 ? 1 : -1;
     const { tens, ones } = splitDeltaTau0(absInt);
 
-    // если Δτ₀ = 0 -> нечего искать
-    if (absInt === 0){
-      for (const y of Object.keys(Y_TO_ROWKEY)){
-        const inp = getMainRowDeltaTauYInputByY(y);
-        if (inp) inp.value = "0";
-      }
-      return;
-    }
-
     for (const [yStr, rowKey] of Object.entries(Y_TO_ROWKEY)){
-      const y = Number(yStr);
-      const outInput = getMainRowDeltaTauYInputByY(y);
-      if (!outInput) continue;
+      const td = out(`dtauy-${yStr}`);
+      if (!td) continue;
+
+      if (absInt === 0){
+        td.textContent = "00";
+        continue;
+      }
 
       let sum = 0;
-      let haveAny = false;
+      let have = false;
 
-      // часть десятков (20/30/40/50...) — только если > 0
       if (tens > 0){
-        const vTens = getT2Value(rowKey, tens, sign);
-        if (vTens != null){
-          sum += vTens;
-          haveAny = true;
-        }
-      }
-
-      // остаток 1..9 или 10
-      if (ones > 0){
-        const vOnes = getT2Value(rowKey, ones, sign);
-        if (vOnes != null){
-          sum += vOnes;
-          haveAny = true;
-        }
-      }
-
-      // если остаток == 0, то используем только tens (например 20)
-      if (ones === 0 && tens > 0 && !haveAny){
         const v = getT2Value(rowKey, tens, sign);
-        if (v != null){
-          sum = v;
-          haveAny = true;
-        }
+        if (v != null){ sum += v; have = true; }
+      }
+      if (ones > 0){
+        const v = getT2Value(rowKey, ones, sign);
+        if (v != null){ sum += v; have = true; }
       }
 
-      if (haveAny){
-        if (sum < 0) sum -= 50;      // ✅ твое правило
-        outInput.value = formatUA(sum, 0);
+      if (!have) td.textContent = "";
+      else {
+        if (sum < 0) sum -= 50;          // твоё правило
+        td.textContent = pad2Abs(Math.round(sum)); // без минуса + ноль
+      }
+    }
+
+    updateBundles();
+  }
+
+  // =========================
+  // Auto-fill day/hour/min
+  // =========================
+  function fillDayHourMinOnLoad(){
+    const firstRow = document.querySelector('.page table tr.row');
+    if (!firstRow) return;
+
+    const nums = Array.from(firstRow.querySelectorAll('input[inputmode="numeric"]'));
+    if (nums.length < 3) return;
+
+    const [dayInput, hourInput, minInput] = nums;
+    if (dayInput.value.trim() || hourInput.value.trim() || minInput.value.trim()) return;
+
+    const dt = new Date();
+    const roundedMin = Math.ceil(dt.getMinutes() / 10) * 10;
+    dt.setSeconds(0,0);
+    dt.setMinutes(roundedMin);
+
+    dayInput.value  = String(dt.getDate());
+    hourInput.value = String(dt.getHours());
+    minInput.value  = String(dt.getMinutes());
+  }
+
+  // =========================
+  // Table 3 (v0 -> Wy)
+  // =========================
+  function buildTable3V0Map(){
+    const t3 = document.querySelector('.t3-table');
+    if (!t3) return null;
+
+    const colHeads = Array.from(t3.querySelectorAll('tr:nth-child(3) th.t3-pink'))
+      .map(th => parseInt(th.textContent.trim(), 10))
+      .filter(Number.isFinite);
+
+    const map = {};
+    const rows = Array.from(t3.querySelectorAll('tr'));
+
+    for (const tr of rows){
+      const rowTh = tr.querySelector('th.t3-y2');
+      if (!rowTh) continue;
+
+      const m = rowTh.textContent.trim().match(/^(\d+)/);
+      const y = m ? parseInt(m[1], 10) : null;
+      if (!Number.isFinite(y)) continue;
+
+      const tds = Array.from(tr.querySelectorAll('td'));
+      const wyCells = tds.slice(0, colHeads.length);
+
+      map[y] = map[y] || {};
+      for (let i = 0; i < colHeads.length && i < wyCells.length; i++){
+        const v0 = colHeads[i];
+        const wy = parseUAFloat(wyCells[i].textContent.trim());
+        map[y][v0] = Number.isFinite(wy) ? wy : null;
+      }
+    }
+
+    return { colHeads, map };
+  }
+
+  const TABLE3_V0 = buildTable3V0Map();
+
+  function pickNearestV0(v, colHeads){
+    let best = colHeads[0], bestDist = Infinity;
+    for (const c of colHeads){
+      const d = Math.abs(v - c);
+      if (d < bestDist){ bestDist = d; best = c; }
+    }
+    return best;
+  }
+
+  function updateWyFromW0(){
+    const w0 = parseUAFloat(getW0Input()?.value);
+    if (!TABLE3_V0) return;
+
+    const col = (w0 == null) ? null : pickNearestV0(w0, TABLE3_V0.colHeads);
+
+    for (const yStr of Object.keys(Y_TO_ROWKEY)){
+      const y = Number(yStr);
+      const td = out(`wy-${yStr}`);
+      if (!td) continue;
+
+      if (w0 == null || col == null){
+        td.textContent = "";
+        continue;
+      }
+
+      const wy = TABLE3_V0.map?.[y]?.[col] ?? null;
+      td.textContent = (wy == null) ? "" : pad2Abs(Math.round(wy));
+    }
+
+    updateBundles();
+  }
+
+  // =========================
+  // αw₀ + αwᵧ outputs
+  // =========================
+  function parseDeltaAlphaWyInt(raw){
+    if (!raw) return null;
+    const s = String(raw).trim().replace(/−/g,"-");
+    const m = s.match(/^(-?\d+)\s*[-–—]/);
+    if (!m) return null;
+    const n = parseInt(m[1], 10);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function updateAlphaSums(){
+    const aw0 = getAlphaW0Rounded();
+
+    for (const yStr of Object.keys(Y_TO_ROWKEY)){
+      const row = document.querySelector(`tr[data-y="${yStr}"]`);
+      const deltaAlphaText = row?.querySelector('td.cell-neg')?.textContent?.trim() || null;
+      const awy = parseDeltaAlphaWyInt(deltaAlphaText);
+
+      const td = out(`asum-${yStr}`);
+      if (!td) continue;
+
+      if (aw0 == null || awy == null){
+        td.textContent = "";
       } else {
-        outInput.value = "";
+        td.textContent = pad2Signed(aw0 + awy);
+      }
+    }
+
+    updateBundles();
+  }
+
+  // =========================
+  // Bundles: "Δτᵧ αw₀+αwᵧ Wᵧ"
+  // =========================
+  function updateBundles(){
+    for (const yStr of Object.keys(Y_TO_ROWKEY)){
+      const dTauY = (out(`dtauy-${yStr}`)?.textContent || "").trim();
+      const aSum  = (out(`asum-${yStr}`)?.textContent || "").trim();
+      const wy    = (out(`wy-${yStr}`)?.textContent || "").trim();
+      const b     = out(`bundle-${yStr}`);
+
+      if (!b) continue;
+      if (!dTauY || !aSum || !wy){
+        b.textContent = "";
+      } else {
+        b.textContent = `${pad2Abs(parseUAFloat(dTauY) ?? NaN)} ${aSum} ${pad2Abs(parseUAFloat(wy) ?? NaN)}`;
       }
     }
   }
 
-  function updateDeltaTvFromInput(){
-    const input = getT0Input();
-    const outTd = getDeltaTvOutputTd();
-    if (!input || !outTd) return;
-
-    const t = parseUAFloat(input.value);
-
-    if (t === null){
-      outTd.textContent = "";
-      outTd.removeAttribute("data-t1-head");
-      outTd.removeAttribute("data-t1-anchor");
-
-      // пересчёт цепочки
-      updateTau0_DeltaTau0_AndFillTable2();
-      return;
-    }
-
-    const picked = findClosestTable1Delta(t);
-    outTd.textContent = picked.delta;
-    outTd.setAttribute("data-t1-head", picked.head);
-    outTd.setAttribute("data-t1-anchor", String(picked.anchor));
-
-    // пересчёт цепочки
-    updateTau0_DeltaTau0_AndFillTable2();
+  // =========================
+  // Recalc all
+  // =========================
+  function recalcAll(){
+    updateDeltaH0FromH0();
+    updateTau0AndDeltaTau0();
+    updateAlphaSums();
+    updateWyFromW0();
+    updateBundles();
   }
 
-  (function initAllLogic(){
-    const t0Input = getT0Input();
-    if (t0Input){
-      t0Input.addEventListener("input", updateDeltaTvFromInput, { passive: true });
-      t0Input.addEventListener("blur", updateDeltaTvFromInput, { passive: true });
-    }
+  // =========================
+  // Init
+  // =========================
+  (function init(){
+    fillDayHourMinOnLoad();
 
-    // если пользователь руками меняет τ₀ или Δτ₀ (на всякий) — пересчитываем таблицу 2
-    const tau0Input = getTau0Input();
-    if (tau0Input){
-      tau0Input.addEventListener("input", updateTau0_DeltaTau0_AndFillTable2, { passive: true });
-      tau0Input.addEventListener("blur", updateTau0_DeltaTau0_AndFillTable2, { passive: true });
-    }
+    getT0Input()?.addEventListener("input", updateDeltaTvFromT0, { passive: true });
+    getT0Input()?.addEventListener("blur",  updateDeltaTvFromT0, { passive: true });
 
-    const deltaTau0Input = getDeltaTau0Input();
-    if (deltaTau0Input){
-      deltaTau0Input.addEventListener("input", updateTau0_DeltaTau0_AndFillTable2, { passive: true });
-      deltaTau0Input.addEventListener("blur", updateTau0_DeltaTau0_AndFillTable2, { passive: true });
-    }
+    getH0Input()?.addEventListener("input", updateDeltaH0FromH0, { passive: true });
+    getH0Input()?.addEventListener("blur",  updateDeltaH0FromH0, { passive: true });
 
-    // стартовый расчёт
-    updateDeltaTvFromInput();
-    updateTau0_DeltaTau0_AndFillTable2();
+    getAlphaW0Input()?.addEventListener("input", updateAlphaW0Badge, { passive: true });
+    getAlphaW0Input()?.addEventListener("blur",  updateAlphaW0Badge, { passive: true });
+
+    getW0Input()?.addEventListener("input", updateWyFromW0, { passive: true });
+    getW0Input()?.addEventListener("blur",  updateWyFromW0, { passive: true });
+
+    // первый прогон
+    updateDeltaTvFromT0();
+    updateAlphaW0Badge();
+    recalcAll();
   })();
 </script>
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
