@@ -644,6 +644,34 @@
       hyphens: auto;
     }
 
+    .cell-tau.is-plain{
+      font-weight:400;
+    }
+
+        /* ✅ кликабельные T.*: аккуратно, без подчеркиваний */
+    td[data-open-sheet],
+    .sheet-link{
+      font-weight:700;     /* как ты хотел: жирным */
+      cursor:pointer;
+      color:#0b3a6b;        /* чуть “интерактивнее”, но не кислотно */
+      -webkit-tap-highlight-color: rgba(11,58,107,.18);
+    }
+
+    /* очень мягкий feedback при тапе */
+    td[data-open-sheet]:active,
+    .sheet-link:active{
+      background: rgba(11,58,107,.08);
+    }
+
+    /* на десктопе — легкий hover (если есть мышь) */
+    @media (hover:hover){
+      td[data-open-sheet]:hover,
+      .sheet-link:hover{
+        background: rgba(11,58,107,.06);
+      }
+    }
+
+
     /* цифры/значения не ломаем */
     .t3-table td,
     .t3-table2 td{
@@ -772,7 +800,7 @@
     <!-- ✅ ΔTᵥ будет тут (output) -->
     <td rowspan="2" data-type="label" data-out="dTv"></td>
 
-    <td class="cell-tau" rowspan="2" data-type="label">-Hno</td>
+    <td class="cell-tau is-plain" rowspan="2" data-type="label">-Hno</td>
     <td class="cell-neg" rowspan="2" data-type="label">750</td>
 
     <td class="is-inactive" data-type="label"></td>
@@ -818,7 +846,7 @@
 
   <!-- Ряд 7 -->
   <tr class="row">
-    <td class="cell-tau" rowspan="2" data-type="label">-τₙ⁰</td>
+    <td class="cell-tau is-plain" rowspan="2" data-type="label">-τₙ⁰</td>
     <td class="cell-neg" rowspan="2" data-type="label">-15,9</td>
 
     <td class="is-inactive" data-type="label"></td>
