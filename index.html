@@ -597,6 +597,46 @@
     }
 
     /* =========================
+   ✅ Перенос текста: Table 1
+   ========================= */
+
+    /* у тебя сейчас .virt-table th, .virt-table td { white-space:nowrap; }
+      оставляем nowrap для td (цифры), но разрешаем перенос для th (текст) */
+    .virt-table th{
+      white-space: normal;
+      overflow-wrap: anywhere;   /* переноси, если не влазит */
+      word-break: break-word;    /* подстраховка */
+      hyphens: auto;             /* переносы по слогам (если браузер умеет) */
+    }
+
+    /* (не обязательно, но явно фиксируем поведение цифр) */
+    .virt-table td{
+      white-space: nowrap;
+    }
+
+
+    /* =========================
+      ✅ Перенос текста: Table 3
+      ========================= */
+
+    /* у тебя сейчас .t3-table th, td и .t3-table2 th, td держатся nowrap
+      оставляем nowrap для td (цифры), но разрешаем перенос для th (заголовки) */
+    .t3-table th,
+    .t3-table2 th{
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* цифры/значения не ломаем */
+    .t3-table td,
+    .t3-table2 td{
+      white-space: nowrap;
+    }
+
+
+    /* =========================
        ✅ Мобильная “супер-экономия”
        ========================= */
     @media (max-width: 520px){
@@ -1399,68 +1439,6 @@
         document.body.classList.contains('sheet-open-t3')
       ) closeSheets();
     });
-
-    const vp = document.getElementById('viewport');
-    if (!vp) return;
-
-    const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent);
-    // на Android это обычно не нужно, а иногда может мешать
-    if (!isIOS) return;
-
-    const VP_BASE = 'width=device-width, initial-scale=1';
-    const VP_LOCK = 'width=device-width, initial-scale=1, maximum-scale=1';
-
-    let baseVVH = null;
-    let t = null;
-
-    function forceZoomOut() {
-      // если сейчас ещё есть активный инпут — не трогаем
-      const a = document.activeElement;
-      if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable)) return;
-
-      // короткий "пинок" viewport'у
-      vp.setAttribute('content', VP_LOCK);
-      clearTimeout(t);
-      t = setTimeout(() => {
-        vp.setAttribute('content', VP_BASE);
-        // иногда помогает лёгкий скролл-тик
-        window.scrollTo({ top: window.scrollY, left: 0, behavior: 'auto' });
-      }, 60);
-    }
-
-    // фиксируем "нормальную" высоту visualViewport (без клавиатуры)
-    if (window.visualViewport) {
-      baseVVH = window.visualViewport.height;
-
-      window.visualViewport.addEventListener('resize', () => {
-        // когда клавиатура закрылась — высота возвращается близко к исходной
-        if (baseVVH && window.visualViewport.height >= baseVVH - 2) {
-          setTimeout(forceZoomOut, 120);
-        }
-      }, { passive: true });
-    }
-
-    // на всякий — по blur/focusout тоже пинаем
-    document.addEventListener('focusout', (e) => {
-      const el = e.target;
-      if (!el) return;
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable) {
-        setTimeout(forceZoomOut, 180);
-      }
-    }, { passive: true });
-
-    // если пользователь тапнул вне инпута — blur и сброс
-    document.addEventListener('pointerdown', (e) => {
-      const a = document.activeElement;
-      if (!a) return;
-      if (!(a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable)) return;
-
-      const inside = e.target.closest('input, textarea, [contenteditable="true"]');
-      if (!inside) {
-        a.blur();
-        setTimeout(forceZoomOut, 220);
-      }
-    }, { passive: true });
   </script>
 </body>
 </html>
