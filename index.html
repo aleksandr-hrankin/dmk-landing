@@ -13,12 +13,20 @@
       --inactive: var(--grid);
       --ink:#111;
 
-      /* базовые размеры (desktop) */
+      /* размеры */
       --cell:24px;
-      --grid-w:2px;
-      --fs:16px;
-      --fs-strong:18px;
-      --pad-x:0px; /* основная таблица без паддингов */
+
+      /* ✅ типографика (адаптивно) */
+      --fs-main: clamp(12px, 3.2vw, 16px);
+      --fs-sheet: clamp(10px, 2.7vw, 14px);
+      --fs-sheet-strong: clamp(11px, 2.9vw, 15px);
+
+      /* ✅ минимальные горизонтальные отступы */
+      --pad-x: 2px;        /* общий */
+      --pad-x-sheet: 2px;  /* внутри bottom-sheet таблиц */
+
+      /* толщина линий */
+      --bw: 2px;
 
       /* bottom sheet */
       --sheet-bg:#ffffff;
@@ -26,21 +34,6 @@
       --sheet-shadow: 0 -14px 40px rgba(0,0,0,.22);
       --overlay: rgba(0,0,0,.45);
       --radius: 16px;
-
-      /* компактность таблиц в sheet */
-      --sheet-pad:12px;
-      --cell-pad-y:4px;
-      --cell-pad-x:3px;
-
-      /* ширины “служебных” колонок в больших таблицах */
-      --t2-y-w:78px;
-      --t3-y-w:150px;
-      --t3-right-w:190px;
-
-      /* минимальные ширины таблиц (чтобы не разваливались, но не были “жирными”) */
-      --t2-minw: 820px;
-      --t3-minw: 920px;
-      --t3b-minw: 860px;
     }
 
     *{ box-sizing:border-box; }
@@ -57,40 +50,49 @@
       color:var(--ink);
     }
 
-    /* ✅ страница теперь “адаптивная”: на телефоне не держим 210mm и огромные поля */
+    /* ✅ страница не разъезжается на телефоне */
     .page{
-      width:min(210mm, 100%);
+      width:min(210mm, 100vw);
       min-height:297mm;
       margin:16px auto;
       padding:10mm 10mm;
       background:var(--paper);
       box-shadow:0 10px 35px rgba(0,0,0,.12);
-      overflow:hidden; /* чтобы не вылезали бордера при узких экранах */
+      overflow:hidden;
     }
 
     table{
       width:100%;
       border-collapse:collapse;
       table-layout:fixed;
-      border:var(--grid-w) solid var(--grid);
+      border:var(--bw) solid var(--grid);
     }
 
     th, td{
-      border:var(--grid-w) solid var(--grid);
-      padding:0;
+      border:var(--bw) solid var(--grid);
+      padding:0 var(--pad-x);
       vertical-align:middle;
       text-align:center;
-      font-size:var(--fs);
+
+      /* ✅ уменьшили и сделали ровные цифры */
+      font-size:var(--fs-main);
       line-height:1;
+
+      /* ✅ фикс высоты строки */
       height:var(--cell);
       overflow:hidden;
+
+      /* ✅ визуальная ровность чисел */
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: "tnum" 1, "lnum" 1;
+      letter-spacing:0;
     }
 
     .title{
       height:70px;
       font-weight:700;
-      font-size:20px;
-      line-height:1.2;
+      font-size:clamp(14px, 4vw, 20px);
+      line-height:1.15;
       text-align:center;
       padding:6px 8px;
     }
@@ -122,7 +124,7 @@
       background:transparent;
       color:var(--ink);
       font:inherit;
-      font-size:var(--fs);
+      font-size:var(--fs-main);
       line-height:1;
       text-align:center;
       padding:0;
@@ -142,8 +144,8 @@
       height:100%;
       display:flex;
       align-items:center;
-      gap:8px;
-      padding:0 6px;
+      gap:6px;             /* ✅ меньше */
+      padding:0 6px;       /* ✅ меньше */
       min-width:0;
     }
     .prefix{
@@ -159,7 +161,7 @@
       background:transparent;
       color:var(--ink);
       font:inherit;
-      font-size:var(--fs);
+      font-size:var(--fs-main);
       line-height:1;
       text-align:left;
       padding:0;
@@ -175,11 +177,11 @@
       background:#FFF2CC;
       color:#D60000;
       font-weight:700;
-      font-size:var(--fs);
+      font-size:var(--fs-main);
       line-height:1;
       text-align:center;
       vertical-align:middle;
-      padding:0;
+      padding:0 var(--pad-x);
     }
 
     td.cell-tau{
@@ -188,9 +190,9 @@
       font-weight:700;
       text-align:center;
       vertical-align:middle;
-      padding:0;
+      padding:0 var(--pad-x);
       line-height:1.05;
-      font-size:var(--fs);
+      font-size:var(--fs-main);
     }
 
     /* =========================
@@ -239,6 +241,7 @@
       .sheet-overlay{ backdrop-filter: blur(2px); }
     }
 
+    /* overlay visible if any sheet is open */
     body.sheet-open-virt .sheet-overlay,
     body.sheet-open-t2 .sheet-overlay,
     body.sheet-open-t3 .sheet-overlay{
@@ -246,6 +249,7 @@
       pointer-events:auto;
     }
 
+    /* open specific sheet */
     body.sheet-open-virt .sheet-virt{ transform: translateY(0); }
     body.sheet-open-t2  .sheet-t2  { transform: translateY(0); }
     body.sheet-open-t3  .sheet-t3  { transform: translateY(0); }
@@ -286,7 +290,7 @@
       cursor:pointer;
     }
     .sheet-body{
-      padding:var(--sheet-pad);
+      padding:10px; /* ✅ чуть меньше */
       overflow:auto;
     }
 
@@ -303,12 +307,12 @@
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
       margin-bottom:8px;
     }
     .virt-h{
       font-weight:700;
-      font-size:18px;
+      font-size:16px;
       line-height:1.1;
       text-align:center;
       flex:1 1 auto;
@@ -318,31 +322,33 @@
       font-weight:700;
       white-space:nowrap;
       flex:0 0 auto;
+      font-size:14px;
     }
 
     .virt-table{
       width:100%;
       border-collapse:collapse;
       table-layout:fixed;
-      border:var(--grid-w) solid var(--grid);
+      border:var(--bw) solid var(--grid);
     }
     .virt-table th, .virt-table td{
-      border:var(--grid-w) solid var(--grid);
-      padding:var(--cell-pad-y) var(--cell-pad-x);
+      border:var(--bw) solid var(--grid);
+      padding:2px var(--pad-x-sheet);
       text-align:center;
       vertical-align:middle;
-      font-size:var(--fs);
+      font-size:var(--fs-sheet);
       line-height:1.05;
       height:auto;
+      white-space:nowrap; /* ✅ не распухает */
     }
     .virt-table .colhead{
       font-weight:700;
-      font-size:var(--fs-strong);
+      font-size:var(--fs-sheet-strong);
       background:#ffffff;
     }
     .virt-table .rowhead{
       font-weight:700;
-      width:86px;
+      width:72px; /* ✅ уже */
       background:#ffffff;
     }
     .virt-blue{
@@ -367,12 +373,12 @@
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
       margin-bottom:8px;
     }
     .t2-h{
       font-weight:700;
-      font-size:18px;
+      font-size:16px;
       line-height:1.1;
       text-align:center;
       flex:1 1 auto;
@@ -382,73 +388,78 @@
       font-weight:700;
       white-space:nowrap;
       flex:0 0 auto;
+      font-size:14px;
     }
 
-    /* ✅ скролл остаётся, но таблица стала “плотнее” */
     .t2-scroll{
       overflow:auto;
       border-radius:10px;
       -webkit-overflow-scrolling: touch;
     }
+
     .t2-table{
       border-collapse:collapse;
       table-layout:fixed;
-      border:var(--grid-w) solid var(--grid);
-      min-width: var(--t2-minw);
+      border:var(--bw) solid var(--grid);
       width:100%;
-      background:#fff;
+      min-width:0; /* ✅ даём шанс влезть */
     }
     .t2-table th, .t2-table td{
-      border:var(--grid-w) solid var(--grid);
+      border:var(--bw) solid var(--grid);
       text-align:center;
       vertical-align:middle;
-      padding:var(--cell-pad-y) var(--cell-pad-x);
+      padding:2px var(--pad-x-sheet); /* ✅ минимально */
       height:auto;
-      line-height:1.05;
-      font-size:var(--fs);
+      line-height:1.02;
+      font-size:var(--fs-sheet);
       background:#fff;
+      white-space:nowrap; /* ✅ не расширяет */
     }
     .t2-table .t2-title{
       font-weight:700;
-      font-size:var(--fs-strong);
-      padding:8px 6px;
+      font-size:var(--fs-sheet-strong);
+      padding:6px 6px;
       background:#fff;
+      white-space:normal;
     }
     .t2-table .t2-sub{
       font-weight:700;
-      font-size:var(--fs-strong);
+      font-size:var(--fs-sheet-strong);
       background:#fff;
+      white-space:nowrap;
     }
     .t2-table .t2-y{
-      width:var(--t2-y-w);
+      width:56px; /* ✅ было 86 */
       font-weight:700;
       background:#fff;
     }
     .t2-table .t2-tophead{
       background:#B69CF3;
       font-weight:700;
-      font-size:var(--fs-strong);
-      padding:6px 2px;
+      font-size:var(--fs-sheet);
     }
 
-    /* ✅ главный пожиратель места — .t2cell: делаем плотнее */
     .t2cell{
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:2px;
-      padding:2px 0;
-      min-height:38px;
+      gap:1px;              /* ✅ меньше */
+      padding:1px 0;        /* ✅ меньше */
+      min-height:34px;      /* ✅ меньше */
     }
-    .t2cell .neg,
-    .t2cell .pos{
+    .t2cell .neg{
+      color:#111;
       font-weight:700;
-      font-size:var(--fs-strong);
+      font-size:var(--fs-sheet-strong);
       line-height:1;
     }
-    .t2cell .neg{ color:#111; }
-    .t2cell .pos{ color:#D60000; }
+    .t2cell .pos{
+      color:#D60000;
+      font-weight:700;
+      font-size:var(--fs-sheet-strong);
+      line-height:1;
+    }
     .t2cell .pos.na{
       color:#111;
       font-weight:700;
@@ -467,12 +478,12 @@
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:12px;
+      gap:10px;
       margin-bottom:8px;
     }
     .t3-h{
       font-weight:700;
-      font-size:18px;
+      font-size:16px;
       line-height:1.1;
       text-align:center;
       flex:1 1 auto;
@@ -482,9 +493,10 @@
       font-weight:700;
       white-space:nowrap;
       flex:0 0 auto;
+      font-size:14px;
     }
     .t3-note{
-      font-size:14px;
+      font-size:13px;
       line-height:1.25;
       color:#222;
       margin:0 0 10px;
@@ -499,85 +511,79 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    .t3-table{
+    .t3-table,
+    .t3-table2{
       border-collapse:collapse;
       table-layout:fixed;
-      border:var(--grid-w) solid var(--grid);
+      border:var(--bw) solid var(--grid);
       width:100%;
-      min-width: var(--t3-minw);
+      min-width:0; /* ✅ шанс влезть */
       background:#fff;
-      margin-bottom:12px;
     }
-    .t3-table th, .t3-table td{
-      border:var(--grid-w) solid var(--grid);
+    .t3-table{ margin-bottom:12px; }
+
+    .t3-table th, .t3-table td,
+    .t3-table2 th, .t3-table2 td{
+      border:var(--bw) solid var(--grid);
       text-align:center;
       vertical-align:middle;
-      padding:var(--cell-pad-y) var(--cell-pad-x);
+      padding:2px var(--pad-x-sheet); /* ✅ минимально */
       height:auto;
-      line-height:1.05;
-      font-size:var(--fs);
+      line-height:1.02;
+      font-size:var(--fs-sheet);
       background:#fff;
+      white-space:nowrap; /* ✅ держим ширину */
     }
-    .t3-table .t3-title{
+
+    .t3-table .t3-title,
+    .t3-table2 .t3-title{
       font-weight:700;
-      font-size:var(--fs-strong);
-      padding:8px 6px;
+      font-size:var(--fs-sheet-strong);
+      padding:6px 6px;
       background:#fff;
+      white-space:normal;
     }
-    .t3-table .t3-sub{
+    .t3-table .t3-sub,
+    .t3-table2 .t3-sub{
       font-weight:700;
-      font-size:var(--fs-strong);
+      font-size:var(--fs-sheet-strong);
       background:#fff;
+      white-space:nowrap;
     }
-    .t3-table .t3-y{ width:var(--t3-y-w); font-weight:700; background:#fff; }
-    .t3-table .t3-y2{ width:var(--t3-y-w); font-weight:700; background:#fff; }
+
+    .t3-table .t3-y,
+    .t3-table2 .t3-y{
+      width:120px; /* ✅ было 170 */
+      font-weight:700;
+      background:#fff;
+      white-space:nowrap;
+    }
+    .t3-table .t3-y2{ width:120px; }
+
     .t3-table .t3-pink{
       background:#E6A6C6;
       font-weight:700;
-      font-size:var(--fs-strong);
-      padding:6px 2px;
+      font-size:var(--fs-sheet-strong);
     }
+
     .t3-table .t3-right{
-      width:var(--t3-right-w);
+      width:160px; /* ✅ было 210 */
       font-weight:700;
       background:#FFF2CC;
+      white-space:normal; /* заголовок пусть переносится */
     }
     .t3-table .t3-rightcell{
       font-weight:700;
       background:#FFF2CC;
+      white-space:nowrap;
     }
 
-    .t3-table2{
-      border-collapse:collapse;
-      table-layout:fixed;
-      border:var(--grid-w) solid var(--grid);
-      width:100%;
-      min-width: var(--t3b-minw);
-      background:#fff;
-    }
-    .t3-table2 th, .t3-table2 td{
-      border:var(--grid-w) solid var(--grid);
-      text-align:center;
-      vertical-align:middle;
-      padding:var(--cell-pad-y) var(--cell-pad-x);
-      height:auto;
-      line-height:1.05;
-      font-size:var(--fs);
-      background:#fff;
-    }
-    .t3-table2 .t3-title{
+    .t3-table2 .t3-right{
+      width:160px; /* ✅ было 210 */
       font-weight:700;
-      font-size:var(--fs-strong);
-      padding:8px 6px;
       background:#fff;
+      white-space:normal;
     }
-    .t3-table2 .t3-sub{
-      font-weight:700;
-      font-size:var(--fs-strong);
-      background:#fff;
-    }
-    .t3-table2 .t3-y{ width:var(--t3-y-w); font-weight:700; background:#fff; }
-    .t3-table2 .t3-right{ width:var(--t3-right-w); font-weight:700; background:#fff; }
 
     /* opener cells / links */
     [data-open-sheet]{
@@ -591,73 +597,31 @@
     }
 
     /* =========================
-       ✅ МОБИЛЬНАЯ “КОМПАКТНОСТЬ”
+       ✅ Мобильная “супер-экономия”
        ========================= */
     @media (max-width: 520px){
       :root{
-        /* плотнее, но читабельно */
-        --fs: 14px;
-        --fs-strong: 15px;
-        --cell: 22px;
-
-        /* тоньше линии — визуально сразу “влезает” */
-        --grid-w: 1.5px;
-
-        /* sheet */
-        --sheet-pad: 10px;
-        --cell-pad-y: 3px;
-        --cell-pad-x: 2px;
-
-        /* служебные колонки уже */
-        --t2-y-w: 62px;
-        --t3-y-w: 126px;
-        --t3-right-w: 160px;
-
-        /* уменьшаем min-width у больших таблиц, чтобы меньше скроллить */
-        --t2-minw: 740px;
-        --t3-minw: 840px;
-        --t3b-minw: 800px;
+        --bw: 1px;            /* ✅ тоньше линии */
+        --pad-x: 1px;         /* ✅ почти ноль */
+        --pad-x-sheet: 1px;   /* ✅ почти ноль */
+        --cell: 22px;         /* ✅ чуть ниже */
       }
 
       .page{
-        width:100%;
-        min-height:auto;
         margin:0;
-        padding:12px 8px;
+        padding:12px 10px;
         box-shadow:none;
+        border-radius:0;
       }
 
-      .title{
-        height:auto;
-        font-size:16px;
-        line-height:1.15;
-        padding:8px 6px;
-      }
+      .sheet-body{ padding:8px; }
+      .virt-wrap, .t2-wrap, .t3-wrap{ padding:8px; }
 
-      .prefix-wrap{ gap:6px; padding:0 4px; }
       td.align-left{ padding-left:4px; }
 
-      .t2cell{
-        gap:1px;
-        min-height:32px;
-      }
-
-      /* немного “сжимаем” заголовки в t2/t3 */
-      .t2-table .t2-title,
-      .t3-table .t3-title,
-      .t3-table2 .t3-title{
-        padding:7px 6px;
-      }
-    }
-
-    @media (max-width: 380px){
-      :root{
-        --fs: 13px;
-        --fs-strong: 14px;
-        --grid-w: 1.25px;
-        --t2-minw: 700px;
-        --t3-minw: 800px;
-        --t3b-minw: 760px;
+      .prefix-wrap{
+        gap:4px;
+        padding:0 4px;
       }
     }
   </style>
@@ -1053,6 +1017,7 @@
               <th class="t2-tophead">40</th><th class="t2-tophead">50</th>
             </tr>
 
+            <!-- 02 -->
             <tr>
               <th class="t2-y">02</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1071,6 +1036,7 @@
               <td><div class="t2cell"><div class="neg">−49</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 04 -->
             <tr>
               <th class="t2-y">04</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1089,6 +1055,7 @@
               <td><div class="t2cell"><div class="neg">−48</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 08 -->
             <tr>
               <th class="t2-y">08</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1107,6 +1074,7 @@
               <td><div class="t2cell"><div class="neg">−46</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 12 -->
             <tr>
               <th class="t2-y">12</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1125,6 +1093,7 @@
               <td><div class="t2cell"><div class="neg">−44</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 16 -->
             <tr>
               <th class="t2-y">16</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1143,6 +1112,7 @@
               <td><div class="t2cell"><div class="neg">−42</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 20 -->
             <tr>
               <th class="t2-y">20</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1161,6 +1131,7 @@
               <td><div class="t2cell"><div class="neg">−40</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 24 -->
             <tr>
               <th class="t2-y">24</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1179,6 +1150,7 @@
               <td><div class="t2cell"><div class="neg">−38</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 30 -->
             <tr>
               <th class="t2-y">30</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1197,6 +1169,7 @@
               <td><div class="t2cell"><div class="neg">−37</div><div class="pos na">—</div></div></td>
             </tr>
 
+            <!-- 40 -->
             <tr>
               <th class="t2-y">40</th>
               <td><div class="t2cell"><div class="neg">−1</div><div class="pos">+1</div></div></td>
@@ -1243,6 +1216,7 @@
         <p class="t3-note">В залежності від швидкості наземного вітру v₀ та дальності зносу вітрових куль Δr</p>
 
         <div class="t3-scroll" aria-label="Прокрутка таблиць Таблиці 3">
+          <!-- ====== Верхня (від v0) ====== -->
           <table class="t3-table" aria-label="Таблиця 3 — Wy та Δαwy в залежності від v0">
             <tr>
               <th class="t3-title" colspan="15">В залежності від швидкості наземного вітру v₀</th>
@@ -1305,6 +1279,7 @@
             </tr>
           </table>
 
+          <!-- ====== Нижня (від Δr) ====== -->
           <table class="t3-table2" aria-label="Таблиця 3 — Wy та Δαwy в залежності від дальності зносу вітрових куль Δr">
             <tr>
               <th class="t3-title" colspan="14">В залежності від дальності зносу вітрових куль Δr</th>
