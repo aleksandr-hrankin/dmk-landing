@@ -178,16 +178,16 @@
       <!-- Ряд 1 -->
       <tr class="row">
         <td rowspan="2" data-type="label">t₀</td>
-        <td rowspan="2" class="has-input" data-type="label" data-cell="r1c2">
+        <td rowspan="2" class="has-input" data-type="label">
           <input
             class="cell-input"
             type="text"
-            inputmode="decimal"
-            pattern="[0-9]*"
+            inputmode="text"
+            pattern="*"
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
 
@@ -201,7 +201,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td class="is-inactive" data-type="label"></td>
@@ -214,7 +214,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td data-type="label">
@@ -226,7 +226,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td data-type="label">
@@ -238,7 +238,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
       </tr>
@@ -263,7 +263,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td rowspan="2" data-type="label">-Hno</td>
@@ -271,12 +271,12 @@
           <input
             class="cell-input"
             type="text"
-            inputmode="decimal"
+            inputmode="text"
             pattern="*"
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td class="is-inactive" data-type="label"></td>
@@ -298,7 +298,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td data-type="label">
@@ -310,7 +310,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
       </tr>
@@ -327,7 +327,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td rowspan="2" data-type="label">ΔH₀</td>
@@ -340,7 +340,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
         <td class="is-inactive" data-type="label"></td>
@@ -360,7 +360,18 @@
       <!-- Ряд 7 -->
       <tr class="row">
         <td rowspan="2" data-type="label">-τₙ⁰</td>
-        <td class="is-inactive" data-type="label"></td>
+        <td rowspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
@@ -370,12 +381,12 @@
           <input
             class="cell-input"
             type="text"
-            inputmode="numeric"
-            pattern="[0-9]*"
+            inputmode="text"
+            pattern="*"
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            aria-label="Ввід чисел"
+            aria-label=""
           />
         </td>
       </tr>
@@ -387,14 +398,24 @@
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
-        <td class="is-inactive" data-type="label"></td>
         <td data-type="label">h, мп</td>
       </tr>
 
       <!-- Ряд 9 -->
       <tr class="row">
         <td rowspan="2" data-type="label">Δτ₀\n(T.2)</td>
-        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td rowspan="2" colspan="3" data-type="label">αw₀ = </td>
         <td rowspan="2" data-type="label">W₀ = </td>
         <td class="is-inactive" data-type="label"></td>
@@ -427,82 +448,478 @@
       <!-- Ряд 13 и ниже -->
       <tr class="row">
         <td data-type="label">200</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">02-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">400</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">04-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">800</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">08-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">1200</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">12-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">1600</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">16-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">2000</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">20-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">2400</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">24-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">3000</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">30-</td>
       </tr>
 
       <tr class="row">
         <td data-type="label">4000</td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td colspan="2" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td colspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label=""
+          />
+        </td>
         <td colspan="2" data-type="label">40-</td>
       </tr>
     </table>
