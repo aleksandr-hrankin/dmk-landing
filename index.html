@@ -17,9 +17,15 @@
       --inactive: var(--grid);
 
       --ink:#111; /* текст */
+      --cell:24px; /* фикс высоты строки */
     }
 
     *{ box-sizing:border-box; }
+
+    html{
+      -webkit-text-size-adjust:100%;
+      text-size-adjust:100%;
+    }
 
     body{
       margin:0;
@@ -51,6 +57,8 @@
       text-align:center;
       font-size:16px;
       line-height:1;
+      height:var(--cell);
+      overflow:hidden;
     }
 
     .title{
@@ -61,14 +69,45 @@
       text-align:center;
     }
 
-    tr.row{ height:24px; }
-    tr.row > td{ height:24px; }
+    tr.row{ height:var(--cell); }
+    tr.row > td{ height:var(--cell); }
 
     /* ✅ самая первая ячейка (неактивная) */
     td.is-inactive{
       background:var(--inactive); /* = цвет бордера */
       color:#fff;                 /* чтобы если текст появится — читался */
     }
+
+    /* ===== ЯЧЕЙКА С ВВОДОМ (чтобы выглядело как обычный td) ===== */
+    td.has-input{
+      padding:0;
+      cursor:text;
+    }
+    .cell-input{
+      width:100%;
+      height:100%;
+      display:block;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--ink);
+      font:inherit;
+      font-size:16px; /* важно: >=16px чтобы iOS не зумил */
+      line-height:1;
+      text-align:center;
+      padding:0;
+      margin:0;
+      appearance:none;
+      -webkit-appearance:none;
+      border-radius:0;
+      caret-color: var(--ink);
+      touch-action: manipulation;
+    }
+    .cell-input::placeholder{ color:transparent; }
+
+    /* если браузер рисует спиннеры на number — мы их не используем, но на всякий */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
     /* ===== ЗЕЛЁНАЯ объединённая зона (C..H) × 12 строк (1..12) ===== */
     td.zone{
@@ -79,9 +118,9 @@
     .zone-grid{
       display:grid;
       grid-template-columns: repeat(6, 1fr);  /* C D E F G H */
-      grid-template-rows: repeat(12, 24px);   /* 1..12 */
+      grid-template-rows: repeat(12, var(--cell));   /* 1..12 */
       width:100%;
-      height: calc(24px * 12);
+      height: calc(var(--cell) * 12);
     }
 
     /* ===== вложенные таблицы ===== */
@@ -99,7 +138,9 @@
       text-align:center;
       vertical-align:middle;
       font-size:16px;
-      height:24px;
+      height:var(--cell);
+      line-height:1;
+      overflow:hidden;
     }
 
     /* Позиции блоков как на скрине */
@@ -110,21 +151,16 @@
     .t_cdef { grid-column: 1 / span 4; grid-row: 9 / span 4; } /* C9..F12 */
 
     /* ===== убираем двойные границы по краям зелёной зоны ===== */
-
-    /* верх зоны (ряд 1) */
     .t_cd  tr:first-child td{ border-top:0; }
     .t_fgh tr:first-child td{ border-top:0; }
 
-    /* левый край зоны (колонка C) */
     .t_cd   td:first-child{ border-left:0; }
     .t_cdef td:first-child{ border-left:0; }
 
-    /* правый край зоны (колонка H) */
     .t_fgh td:last-child{ border-right:0; }
     .t_gh  td:last-child{ border-right:0; }
-    .t_h   td{ border-right:0; } /* 1 колонка */
+    .t_h   td{ border-right:0; }
 
-    /* низ зоны (ряд 12) */
     .t_cdef tr:last-child td{ border-bottom:0; }
   </style>
 </head>
@@ -142,7 +178,22 @@
       <!-- Ряд 1 -->
       <tr class="row">
         <td rowspan="2" data-type="label">t₀</td>
-        <td rowspan="2" data-type="label"></td>
+
+        <!-- ✅ ВТОРАЯ ЯЧЕЙКА (1-я строка, 2-я колонка): ввод цифр с клавиатурой на телефоне -->
+        <td rowspan="2" class="has-input" data-type="label" data-cell="r1c2">
+          <!-- type="text" + inputmode="numeric" => цифровая клавиатура (iOS/Android) -->
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
+
         <td rowspan="2" data-type="label">H₀</td>
         <td rowspan="2" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
@@ -338,5 +389,15 @@
       </tr>
     </table>
   </div>
+
+  <script>
+    // Чтобы фокус срабатывал даже если тыкнули в сам td, а не прямо по символам инпута
+    document.addEventListener('click', (e) => {
+      const td = e.target.closest('td.has-input');
+      if (!td) return;
+      const input = td.querySelector('input.cell-input');
+      if (input) input.focus({ preventScroll: true });
+    }, { passive: true });
+  </script>
 </body>
 </html>
