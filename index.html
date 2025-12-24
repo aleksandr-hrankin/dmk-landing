@@ -6,59 +6,25 @@
   <title>Бланк метеосередній</title>
 
   <style>
-    /* 1) Отключаем авто-увеличение шрифта на мобиле */
-    html{
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-    /* если всё равно увеличивает — раскомментируй (жёстко) */
-    /* html{ -webkit-text-size-adjust:none; text-size-adjust:none; } */
-
     :root{
       --ink:#111;
       --paper:#fff;
       --bg:#f2f2f2;
-
-      /* 2) Единая жесткая высота ячейки */
-      --cell:24px;
     }
-
     *{ box-sizing:border-box; }
-
     body{
       margin:0;
       background:var(--bg);
       font-family:"Times New Roman", Times, serif;
       color:var(--ink);
     }
-
-    /* 4) На экране лист резиновый по ширине, mm оставляем для печати */
     .page{
-      width: min(210mm, calc(100vw - 24px));
+      width: 210mm;
+      min-height: 297mm;
       margin: 16px auto;
       padding: 10mm 10mm;
       background:var(--paper);
       box-shadow: 0 10px 35px rgba(0,0,0,.12);
-      min-height: 297mm; /* на десктопе ок, на мобиле снимем в media */
-    }
-
-    @media (max-width: 900px){
-      .page{
-        min-height: unset; /* убираем огромный белый низ */
-        margin: 12px auto;
-        padding: 10mm 8mm;
-      }
-    }
-
-    @media print{
-      html{ -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-      body{ background:#fff; }
-      .page{
-        width:210mm;
-        min-height:297mm;
-        margin:0;
-        box-shadow:none;
-      }
     }
 
     table{
@@ -67,46 +33,40 @@
       table-layout:fixed;
       border:2px solid var(--ink);
     }
-
-    /* 2) Жёстко фиксируем высоту через переменную */
-    tr.row{ height:var(--cell); }
-    tr.row > td{ height:var(--cell); }
-
     th, td{
       border:2px solid var(--ink);
       padding:0;
       vertical-align:middle;
       text-align:center;
       font-size:16px;
-
-      line-height:1;        /* можно оставить */
-      height:var(--cell);   /* ключевое */
-      overflow:hidden;      /* чтобы контент не раздувал */
+      line-height:1;
     }
 
     .title{
-      height:70px;          /* заголовок оставляем как было */
+      height:70px;
       font-weight:700;
       font-size:20px;
       line-height:1.2;
       text-align:center;
     }
+    tr.row{ height:24px; }
+    tr.row > td{ height:24px; } /* можно оставить, но ключевое — height на tr */
+
 
     /* ===== ЗЕЛЁНАЯ объединённая зона (C..H) × 12 строк (1..12) ===== */
     td.zone{
       padding:0;
       vertical-align:top;
     }
-
-    /* 3) Для вложенных mini-таблиц — не полагаться на .row */
     .zone-grid{
       display:grid;
-      grid-template-columns: repeat(6, 1fr);               /* C D E F G H */
-      grid-template-rows: repeat(12, var(--cell));         /* 1..12 */
+      grid-template-columns: repeat(6, 1fr);      /* C D E F G H */
+      grid-template-rows: repeat(12, 24px);      /* 1..12 */
       width:100%;
-      height: calc(var(--cell) * 12);
+      height: calc(24px * 12);
     }
 
+    /* ===== вложенные таблицы ===== */
     .mini{
       width:100%;
       height:100%;
@@ -114,18 +74,13 @@
       table-layout:fixed;
       border:0; /* чтобы не было "жирных" двойных линий */
     }
-
-    .mini tr{ height:var(--cell); }
     .mini td{
       border:2px solid var(--ink);
       padding:0;
       text-align:center;
       vertical-align:middle;
       font-size:16px;
-
-      height:var(--cell);
-      line-height:1;
-      overflow:hidden;
+      height:24px;
     }
 
     /* Позиции блоков как на скрине */
@@ -169,89 +124,64 @@
 
       <!-- Ряд 1 -->
       <tr class="row">
-        <td rowspan="2" data-type="label">t₀</td>
-        <td rowspan="2" data-type="label"></td>
-
-        <!-- ЗЕЛЁНАЯ ЗОНА: C..H (6 колонок) × 12 строк -->
-        <td class="zone" colspan="6" rowspan="12" data-type="label">
-          <div class="zone-grid">
-
-            <!-- 1) C1..D6 -->
-            <table class="mini t_cd" aria-label="C1-D6">
-              <tbody>
-                <tr><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr>
-                <tr></tr>
-                <tr><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr>
-                <tr></tr>
-                <tr><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr>
-                <tr></tr>
-              </tbody>
-            </table>
-
-            <!-- 2) F1..H2 -->
-            <table class="mini t_fgh" aria-label="F1-H2">
-              <tbody>
-                <tr><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td></tr>
-                <tr><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td></tr>
-              </tbody>
-            </table>
-
-            <!-- 3) G4..H5 -->
-            <table class="mini t_gh" aria-label="G4-H5">
-              <tbody>
-                <tr><td data-type="label"></td><td data-type="label"></td></tr>
-                <tr><td data-type="label"></td><td data-type="label"></td></tr>
-              </tbody>
-            </table>
-
-            <!-- 4) H7..H8 -->
-            <table class="mini t_h" aria-label="H7-H8">
-              <tbody>
-                <tr><td data-type="label"></td></tr>
-                <tr><td data-type="label"></td></tr>
-              </tbody>
-            </table>
-
-            <!-- 5) Блок C8..F12, но строка C9..F9 УДАЛЕНА -->
-            <table class="mini t_cdef" aria-label="C8-F12 (без C9-F9)">
-              <tbody>
-                <!-- C8..F8 -->
-                <tr>
-                  <td rowspan="2" colspan="3" data-type="label"></td>
-                  <td rowspan="2" data-type="label"></td>
-                </tr>
-
-                <!-- C10..F10 -->
-                <tr></tr>
-
-                <!-- C11..F11 -->
-                <tr>
-                  <td rowspan="2" data-type="label"></td>
-                  <td rowspan="2" colspan="2" data-type="label"></td>
-                  <td rowspan="2" data-type="label"></td>
-                </tr>
-
-                <!-- C12..F12 -->
-                <tr></tr>
-              </tbody>
-            </table>
-
-          </div>
-        </td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
       </tr>
 
-      <!-- Ряды 2..12: тут только A,B (остальное занято rowspan=12) -->
-      <tr class="row"></tr> <!-- 2 -->
-      <tr class="row"><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr> <!-- 3 -->
-      <tr class="row"></tr> <!-- 4 -->
-      <tr class="row"><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr> <!-- 5 -->
-      <tr class="row"></tr> <!-- 6 -->
-      <tr class="row"><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr> <!-- 7 -->
-      <tr class="row"></tr> <!-- 8 -->
-      <tr class="row"><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr> <!-- 9 -->
-      <tr class="row"></tr> <!-- 10 -->
-      <tr class="row"><td rowspan="2" data-type="label"></td><td rowspan="2" data-type="label"></td></tr> <!-- 11 -->
-      <tr class="row"></tr> <!-- 12 -->
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
+
+      <tr class="row">
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+        <td data-type="label"></td><td data-type="label"></td><td data-type="label"></td><td data-type="label"></td>
+      </tr>
 
       <!-- Ряд 13 и ниже -->
       <tr class="row">
