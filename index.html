@@ -74,8 +74,8 @@
 
     /* ✅ самая первая ячейка (неактивная) */
     td.is-inactive{
-      background:var(--inactive);
-      color:#fff;
+      background:var(--inactive); /* = цвет бордера */
+      color:#fff;                 /* чтобы если текст появится — читался */
     }
 
     /* ===== ЯЧЕЙКА С ВВОДОМ (чтобы выглядело как обычный td) ===== */
@@ -105,6 +105,7 @@
     }
     .cell-input::placeholder{ color:transparent; }
 
+    /* если браузер рисует спиннеры на number — мы их не используем, но на всякий */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
@@ -128,7 +129,7 @@
       height:100%;
       border-collapse:collapse;
       table-layout:fixed;
-      border:0;
+      border:0; /* чтобы не было "жирных" двойных линий */
     }
 
     .mini td{
@@ -161,40 +162,6 @@
     .t_h   td{ border-right:0; }
 
     .t_cdef tr:last-child td{ border-bottom:0; }
-
-    /* ===== Панель быстрых символов (появляется при фокусе) ===== */
-    .quickkeys{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      z-index:9999;
-      background:#fff;
-      border-top:2px solid var(--grid);
-      box-shadow:0 -10px 25px rgba(0,0,0,.10);
-      padding:10px 12px;
-      display:none;
-      gap:10px;
-      justify-content:center;
-      align-items:center;
-      font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
-    .quickkeys.is-open{ display:flex; }
-
-    .qbtn{
-      min-width:64px;
-      height:40px;
-      padding:0 14px;
-      border:2px solid var(--grid);
-      border-radius:10px;
-      background:#fff;
-      font-size:18px;
-      line-height:1;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .qbtn:active{ transform:translateY(1px); }
   </style>
 </head>
 
@@ -211,13 +178,12 @@
       <!-- Ряд 1 -->
       <tr class="row">
         <td rowspan="2" data-type="label">t₀</td>
-
-        <!-- ✅ ввод: оставляем "цифровую" (decimal), а ,/± даём кнопками снизу -->
         <td rowspan="2" class="has-input" data-type="label" data-cell="r1c2">
           <input
             class="cell-input"
             type="text"
             inputmode="decimal"
+            pattern="[0-9]*"
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
@@ -226,11 +192,55 @@
         </td>
 
         <td rowspan="2" data-type="label">H₀</td>
-        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
         <td class="is-inactive" data-type="label"></td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
       </tr>
 
       <!-- Ряд 2 -->
@@ -244,9 +254,31 @@
       <!-- Ряд 3 -->
       <tr class="row">
         <td rowspan="2" data-type="label">+ΔTᵥ\n(T.1)</td>
-        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
         <td rowspan="2" data-type="label">-Hno</td>
-        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="decimal"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
@@ -257,16 +289,60 @@
       <tr class="row">
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
-        <td data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
       </tr>
 
       <!-- Ряд 5 -->
       <tr class="row">
         <td rowspan="2" data-type="label">τ₀</td>
-        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
         <td rowspan="2" data-type="label">ΔH₀</td>
-        <td rowspan="2" data-type="label"></td>
+        <td rowspan="2" data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="text"
+            pattern="*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td data-type="label">ΔH₀</td>
@@ -290,7 +366,18 @@
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
         <td class="is-inactive" data-type="label"></td>
-        <td data-type="label"></td>
+        <td data-type="label">
+          <input
+            class="cell-input"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Ввід чисел"
+          />
+        </td>
       </tr>
 
       <!-- Ряд 8 -->
@@ -421,96 +508,14 @@
     </table>
   </div>
 
-  <!-- Панель быстрых символов -->
-  <div class="quickkeys" id="quickkeys" aria-hidden="true">
-    <button class="qbtn" type="button" data-insert=",">,</button>
-    <button class="qbtn" type="button" data-insert="±">±</button>
-    <button class="qbtn" type="button" data-insert="+">+</button>
-    <button class="qbtn" type="button" data-insert="-">−</button>
-  </div>
-
   <script>
-    // Чтобы фокус срабатывал даже если тыкнули в сам td
+    // Чтобы фокус срабатывал даже если тыкнули в сам td, а не прямо по символам инпута
     document.addEventListener('click', (e) => {
       const td = e.target.closest('td.has-input');
       if (!td) return;
       const input = td.querySelector('input.cell-input');
       if (input) input.focus({ preventScroll: true });
     }, { passive: true });
-
-    const quick = document.getElementById('quickkeys');
-    let activeInput = null;
-
-    function openQuick() {
-      quick.classList.add('is-open');
-      quick.setAttribute('aria-hidden', 'false');
-    }
-    function closeQuick() {
-      quick.classList.remove('is-open');
-      quick.setAttribute('aria-hidden', 'true');
-    }
-
-    function insertAtCursor(input, text) {
-      if (!input) return;
-      const start = input.selectionStart ?? input.value.length;
-      const end   = input.selectionEnd ?? input.value.length;
-
-      const before = input.value.slice(0, start);
-      const after  = input.value.slice(end);
-
-      input.value = before + text + after;
-
-      const pos = start + text.length;
-      input.setSelectionRange(pos, pos);
-      input.dispatchEvent(new Event('input', { bubbles: true }));
-      input.focus({ preventScroll: true });
-    }
-
-    // Показываем панель при фокусе на любом .cell-input
-    document.addEventListener('focusin', (e) => {
-      const inp = e.target.closest?.('input.cell-input');
-      if (!inp) return;
-      activeInput = inp;
-      openQuick();
-    });
-
-    // Прячем панель, если фокус ушёл вообще с инпутов (клик по пустому месту и т.д.)
-    document.addEventListener('focusout', (e) => {
-      const goingTo = e.relatedTarget;
-      // если уходим на кнопку панели — не закрываем
-      if (goingTo && goingTo.closest && goingTo.closest('#quickkeys')) return;
-
-      // небольшая задержка: чтобы клик по кнопке панели успел сработать
-      setTimeout(() => {
-        const focused = document.activeElement;
-        if (!focused || !focused.closest || !focused.closest('input.cell-input')) {
-          activeInput = null;
-          closeQuick();
-        }
-      }, 0);
-    });
-
-    // Кнопки вставки
-    quick.addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-insert]');
-      if (!btn) return;
-      const val = btn.getAttribute('data-insert') || '';
-      insertAtCursor(activeInput, val);
-    });
-
-    // Лёгкая фильтрация: разрешаем только цифры и нужные символы
-    document.addEventListener('input', (e) => {
-      const inp = e.target.closest?.('input.cell-input');
-      if (!inp) return;
-
-      // разрешено: цифры, пробел, + - , . ±
-      const cleaned = inp.value.replace(/[^\d\s+\-.,±]/g, '');
-      if (cleaned !== inp.value) {
-        const pos = inp.selectionStart ?? cleaned.length;
-        inp.value = cleaned;
-        inp.setSelectionRange(pos, pos);
-      }
-    });
   </script>
 </body>
 </html>
